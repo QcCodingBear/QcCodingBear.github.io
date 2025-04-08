@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,7 +75,7 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
@@ -92,14 +92,15 @@
         </ul>
 
         <h2>Différence entre blocs anonymes et sous-programmes</h2>
-        <p>Les sous-programmes (procédures et fonctions) ont un nom, sont compilés une seule fois, stockés dans la base de données Oracle, et peuvent être réutilisés et appelés par d’autres applications. En revanche, les blocs anonymes :</p>
+        <p>Les sous-programmes (procédures et fonctions) sont des programmes ayant un nom, stockés et compilés une seule fois dans la base de données. Ils sont réutilisables et appelables par d'autres programmes, ce qui permet d’optimiser les performances et la maintenance du code. En revanche, les blocs anonymes :</p>
         <ul>
             <li>Ne portent pas de nom.</li>
             <li>Sont compilés à chaque exécution.</li>
-            <li>Ne sont pas stockés dans la base de données.</li>
+            <li>Ne sont pas stockés dans la base de données, donc chaque appel nécessite leur recompilation.</li>
         </ul>
 
         <h2>Procédure : Exemple</h2>
+        <p>Une procédure est une unité de traitement qui peut être appelée pour effectuer des actions spécifiques. Elle peut accepter des paramètres et peut ne pas renvoyer de valeur. Voici un exemple simple d’une procédure qui ajoute un département dans la table <code>dept</code> :</p>
         <div class="example">
             CREATE OR REPLACE PROCEDURE add_dept IS<br>
             &nbsp;&nbsp;dept_id dept.department_id%TYPE;<br>
@@ -115,14 +116,15 @@
         </div>
 
         <h2>Modes de passage de paramètres</h2>
-        <p>Il existe trois modes de paramètres :</p>
+        <p>Lors de la définition d’une procédure ou d’une fonction, vous pouvez passer des paramètres. Il existe trois modes de passage :</p>
         <ul>
-            <li><strong>IN</strong> : Pour transmettre des valeurs à la procédure (valeur par défaut).</li>
-            <li><strong>OUT</strong> : Pour retourner des valeurs.</li>
-            <li><strong>IN OUT</strong> : Sert à la fois pour l’entrée et la sortie.</li>
+            <li><strong>IN</strong> : Ce mode permet de passer une valeur à la procédure. C’est le mode par défaut. Par exemple, une procédure peut prendre un identifiant de département pour insérer un nouveau département dans une table.</li>
+            <li><strong>OUT</strong> : Ce mode permet à la procédure de renvoyer une valeur. Par exemple, une procédure pourrait calculer et renvoyer un salaire net en fonction d’un salaire brut et des taxes.</li>
+            <li><strong>IN OUT</strong> : Ce mode permet à la procédure de recevoir une valeur en entrée et de la modifier avant de la renvoyer en sortie.</li>
         </ul>
 
         <h2>Fonction : Exemple</h2>
+        <p>Les fonctions en PL/SQL sont similaires aux procédures, mais elles renvoient toujours une valeur. Voici un exemple simple de fonction qui vérifie si le salaire d'un employé est supérieur à la moyenne des salaires de tous les employés :</p>
         <div class="example">
             CREATE OR REPLACE FUNCTION check_sal RETURN BOOLEAN IS<br>
             &nbsp;&nbsp;empno employees.employee_id%TYPE;<br>
@@ -136,6 +138,28 @@
             &nbsp;&nbsp;ELSE<br>
             &nbsp;&nbsp;&nbsp;&nbsp;RETURN FALSE;<br>
             &nbsp;&nbsp;END IF;<br>
+            END;<br>
+            /
+        </div>
+
+        <h2>Appel d'une procédure et d'une fonction</h2>
+        <p>Une procédure est appelée avec la commande <code>EXECUTE</code> ou dans un bloc anonyme. Une fonction est appelée dans une requête ou un bloc PL/SQL et renvoie une valeur qui peut être utilisée dans des calculs ou affichée.</p>
+        
+        <h2>Gestion des exceptions dans les procédures</h2>
+        <p>Lors de l'exécution d'une procédure, il peut survenir des erreurs (comme une violation de contrainte ou une division par zéro). Ces erreurs peuvent être gérées grâce à un bloc <code>EXCEPTION</code>. Par exemple, voici comment gérer une exception pour afficher un message d'erreur personnalisé :</p>
+        <div class="example">
+            CREATE OR REPLACE PROCEDURE add_dept IS<br>
+            &nbsp;&nbsp;dept_id dept.department_id%TYPE;<br>
+            &nbsp;&nbsp;dept_name dept.department_name%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;dept_id := 280;<br>
+            &nbsp;&nbsp;dept_name := 'ST-Curriculum';<br>
+            &nbsp;&nbsp;INSERT INTO dept (department_id, department_name)<br>
+            &nbsp;&nbsp;VALUES (dept_id, dept_name);<br>
+            &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Inserted ' || SQL%ROWCOUNT || ' row.');<br>
+            EXCEPTION<br>
+            &nbsp;&nbsp;WHEN OTHERS THEN<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);<br>
             END;<br>
             /
         </div>
