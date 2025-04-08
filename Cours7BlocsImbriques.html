@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,7 +75,7 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
@@ -83,19 +83,18 @@
 
         <h2>Introduction</h2>
         <p>
-            Les blocs imbriqués en PL/SQL permettent d'organiser le code en encapsulant un bloc
-            à l'intérieur d'un autre. Ils sont particulièrement utiles pour gérer la portée des variables, les exceptions et l'allocation des ressources.
+            Les blocs imbriqués en PL/SQL sont des blocs de code définis à l'intérieur d'un autre bloc. Ces structures permettent de mieux organiser le code en contrôlant l'exécution des instructions et en gérant la portée des variables. Ils sont également utiles pour la gestion des exceptions, car ils permettent de capturer et traiter les erreurs à différents niveaux du programme.
         </p>
 
         <h2>Terminologie</h2>
         <ul>
-            <li><strong>Bloc parent</strong> : Appelle et contrôle le sous-bloc.</li>
-            <li><strong>Sous-bloc</strong> : Bloc imbriqué appelé par le bloc parent.</li>
+            <li><strong>Bloc parent</strong> : C'est le bloc principal qui englobe un ou plusieurs sous-blocs et en contrôle l'exécution.</li>
+            <li><strong>Sous-bloc</strong> : Un bloc imbriqué dans un autre bloc, appelé et exécuté par le bloc parent.</li>
         </ul>
 
         <h2>Portée des variables</h2>
         <p>
-            La portée d'une variable est limitée au bloc dans lequel elle est déclarée. Les sous-blocs ne peuvent pas accéder aux variables du bloc parent, sauf si elles sont passées explicitement en paramètres.
+            Dans un bloc PL/SQL, les variables sont limitées à la portée du bloc dans lequel elles sont déclarées. Un sous-bloc ne peut pas accéder directement aux variables du bloc parent, sauf si elles sont passées explicitement en paramètres.
         </p>
         <div class="example">
             -- Bloc principal<br>
@@ -116,14 +115,14 @@
 
         <h2>Avantages des blocs imbriqués</h2>
         <ul>
-            <li><strong>Allocation différée</strong> : Les variables d'un sous-bloc ne sont créées qu'au moment où le sous-bloc est exécuté.</li>
-            <li><strong>Propagation des exceptions</strong> : Les exceptions non gérées dans le sous-bloc sont transmises au bloc parent.</li>
-            <li><strong>Isolation des erreurs</strong> : Les erreurs survenant dans un sous-bloc n'interrompent pas nécessairement l'exécution du bloc parent.</li>
+            <li><strong>Allocation différée</strong> : Les variables d'un sous-bloc ne sont créées que lorsque le sous-bloc est exécuté. Cela permet une gestion efficace des ressources.</li>
+            <li><strong>Propagation des exceptions</strong> : Les exceptions qui ne sont pas gérées dans un sous-bloc peuvent être propagées au bloc parent pour un traitement global.</li>
+            <li><strong>Isolation des erreurs</strong> : Les erreurs survenant dans un sous-bloc peuvent être capturées et traitées sans affecter l'exécution du bloc parent, offrant ainsi plus de flexibilité dans le contrôle des erreurs.</li>
         </ul>
 
         <h2>Gestion des exceptions</h2>
         <p>
-            Les exceptions déclenchées dans un sous-bloc peuvent être capturées par le bloc parent, ou isolées pour éviter l'arrêt complet de l'exécution.
+            Les exceptions qui surviennent dans un sous-bloc peuvent être gérées de manière isolée ou propagées vers le bloc parent. Cela permet une gestion fine des erreurs à différents niveaux de l'exécution du programme.
         </p>
         <div class="example">
             BEGIN<br>
@@ -141,7 +140,7 @@
 
         <h2>Exemple complexe</h2>
         <p>
-            Voici un exemple où un sous-bloc gère une exception spécifique et transmet l'information au bloc parent :
+            Cet exemple montre comment un sous-bloc peut lever une exception spécifique et la gérer dans un bloc parent pour afficher un message d'erreur approprié. Cela montre comment gérer des erreurs de manière ciblée dans des blocs imbriqués :
         </p>
         <div class="example">
             BEGIN<br>
