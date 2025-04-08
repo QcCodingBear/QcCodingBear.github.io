@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,7 +75,7 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
@@ -83,58 +83,56 @@
         <h2>Qu'est-ce que c'est ?</h2>
         <p>
             Un <strong>package SQL</strong> est un regroupement d'éléments de programmation <strong>PL/SQL</strong>, comme des procédures, des fonctions, des variables, et plus encore. 
-            Il agit comme un conteneur permettant d'organiser et de réutiliser ces éléments.
+            Il agit comme un conteneur permettant d'organiser et de réutiliser ces éléments dans une base de données Oracle.
         </p>
 
         <h2>Structure d'un Package</h2>
         <p>Un package est divisé en deux parties :</p>
         <ul>
-            <li><strong>Spécification (spec)</strong> : Déclare les éléments publics accessibles de l'extérieur.
- <div class="example">
-CREATE OR REPLACE PACKAGE my_package AS<br>
-    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2);<br>
-    FUNCTION get_employee_count RETURN NUMBER;<br>
-END my_package;<br>
-        </div>
-</li>
-            <li><strong>Corps (body)</strong> : Contient les définitions des éléments déclarés dans la spécification.
- <div class="example">
-CREATE OR REPLACE PACKAGE BODY my_package AS<br>
-    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2) IS<br>
-    BEGIN<br>
-        -- Logic for adding an employee<br>
-        DBMS_OUTPUT.PUT_LINE('Employee added: ' || emp_name);<br>
-    END add_employee;<br><br>
+            <li><strong>Spécification (spec)</strong> : Déclare les éléments publics accessibles de l'extérieur. Ce sont les interfaces que l'utilisateur peut appeler.</li>
+            <div class="example">
+                CREATE OR REPLACE PACKAGE my_package AS<br>
+                    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2);<br>
+                    FUNCTION get_employee_count RETURN NUMBER;<br>
+                END my_package;<br>
+            </div>
+            <li><strong>Corps (body)</strong> : Contient les définitions des éléments déclarés dans la spécification. C'est là que la logique réelle de l'application est écrite.</li>
+            <div class="example">
+                CREATE OR REPLACE PACKAGE BODY my_package AS<br>
+                    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2) IS<br>
+                    BEGIN<br>
+                        -- Logic for adding an employee<br>
+                        DBMS_OUTPUT.PUT_LINE('Employee added: ' || emp_name);<br>
+                    END add_employee;<br><br>
 
-    FUNCTION get_employee_count RETURN NUMBER IS<br>
-        emp_count NUMBER;<br>
-    BEGIN<br>
-        -- Logic to count employees<br>
-        emp_count := 100; -- Placeholder value<br>
-        RETURN emp_count;<br>
-    END get_employee_count;<br>
-END my_package;<br>
-        </div>
-</li>
+                    FUNCTION get_employee_count RETURN NUMBER IS<br>
+                        emp_count NUMBER;<br>
+                    BEGIN<br>
+                        -- Logic to count employees<br>
+                        emp_count := 100; -- Placeholder value<br>
+                        RETURN emp_count;<br>
+                    END get_employee_count;<br>
+                END my_package;<br>
+            </div>
         </ul>
         
         <h2>À quoi ça sert ?</h2>
         <p>Les packages servent à :</p>
         <ul>
-            <li><strong>Organiser</strong> le code par fonctionnalités liées.</li>
-            <li><strong>Réutiliser</strong> des éléments dans différents contextes.</li>
-            <li><strong>Encapsuler</strong> la logique interne et limiter l'accès à certains éléments.</li>
-            <li><strong>Améliorer les performances</strong> en chargeant efficacement le package en mémoire.</li>
+            <li><strong>Organiser</strong> le code par fonctionnalités liées, rendant le code plus modulaire.</li>
+            <li><strong>Réutiliser</strong> des éléments dans différents contextes sans redondance.</li>
+            <li><strong>Encapsuler</strong> la logique interne et limiter l'accès à certains éléments via des procédures et fonctions publiques.</li>
+            <li><strong>Améliorer les performances</strong> en chargeant efficacement le package dans la mémoire, ce qui réduit les coûts d'appel à des éléments PL/SQL individuels.</li>
         </ul>
 
         <h2>Exemple de Package</h2>
         <p><strong>Spécification :</strong></p>
-<p>Imaginons un package pour gérer un système d'inventaire</p>
+        <p>Imaginons un package pour gérer un système d'inventaire. Il contient une procédure pour mettre à jour les stocks et une fonction pour obtenir le stock disponible.</p>
         <div class="example">
             CREATE OR REPLACE PACKAGE inventory_pkg AS<br>
                 PROCEDURE update_stock(product_id NUMBER, quantity NUMBER);<br>
                 FUNCTION get_stock(product_id NUMBER) RETURN NUMBER;<br>
-            END inventory_pkg;
+            END inventory_pkg;<br>
         </div>
         
         <p><strong>Corps :</strong></p>
@@ -150,7 +148,7 @@ END my_package;<br>
                     stock := 50; -- Valeur fictive<br>
                     RETURN stock;<br>
                 END get_stock;<br>
-            END inventory_pkg;
+            END inventory_pkg;<br>
         </div>
 
         <p><strong>Utilisation :</strong></p>
@@ -158,7 +156,7 @@ END my_package;<br>
             BEGIN<br>
                 inventory_pkg.update_stock(101, 20);<br>
                 DBMS_OUTPUT.PUT_LINE('Stock actuel : ' || inventory_pkg.get_stock(101));<br>
-            END;
+            END;<br>
         </div>
 
         <div class="footer">
