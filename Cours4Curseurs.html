@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,29 +75,31 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
         <h1>Les Curseurs en PL/SQL</h1>
         <h2>Qu'est-ce qu'un curseur&nbsp;?</h2>
         <p>
-            Chaque instruction SQL exécutée par Oracle utilise un <strong>curseur implicite</strong>, mais on peut également créer des <strong>curseurs explicites</strong> pour des besoins spécifiques. 
+            Un curseur est un mécanisme permettant de parcourir ligne par ligne un jeu de résultats obtenu à partir d'une requête SQL. Oracle gère automatiquement les curseurs implicites pour des instructions simples comme <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, mais il est possible d'utiliser des <strong>curseurs explicites</strong> pour une gestion plus fine et personnalisée des données retournées.
         </p>
         <h2>Types de curseurs</h2>
         <ul>
-            <li><strong>Curseur implicite</strong>&nbsp;: Automatiquement géré par Oracle pour les instructions SQL comme <code>INSERT</code>, <code>UPDATE</code>, ou <code>SELECT</code>.</li>
-            <li><strong>Curseur explicite</strong>&nbsp;: Déclaré et contrôlé manuellement par le programmeur pour traiter des jeux de données multi-lignes.</li>
+            <li><strong>Curseur implicite</strong>&nbsp;: C'est le type de curseur qui est créé automatiquement par Oracle pour gérer les résultats des requêtes exécutées. Par exemple, une requête <code>SELECT</code> qui renvoie un seul résultat utilise un curseur implicite.</li>
+            <li><strong>Curseur explicite</strong>&nbsp;: Ce type de curseur est défini par le programmeur pour gérer des résultats plus complexes. Par exemple, il peut être utilisé pour parcourir plusieurs lignes d'une table dans un bloc PL/SQL, permettant ainsi de gérer la récupération des données ligne par ligne avec plus de contrôle.</li>
         </ul>
-        
+
         <h2>Étapes d'utilisation des curseurs explicites</h2>
         <ol>
-            <li><strong>Déclaration&nbsp;:</strong> Créer une zone SQL en définissant le curseur.</li>
-            <li><strong>Ouverture&nbsp;:</strong> Utiliser <code>OPEN</code> pour exécuter la requête SQL.</li>
-            <li><strong>Extraction&nbsp;:</strong> Récupérer les lignes une par une avec <code>FETCH</code>.</li>
-            <li><strong>Fermeture&nbsp;:</strong> Libérer les ressources avec <code>CLOSE</code>.</li>
+            <li><strong>Déclaration&nbsp;:</strong> On commence par déclarer le curseur, en lui associant une requête SQL. Cette requête définit le jeu de résultats que le curseur va manipuler.</li>
+            <li><strong>Ouverture&nbsp;:</strong> On utilise la commande <code>OPEN</code> pour ouvrir le curseur et exécuter la requête SQL qui le définit.</li>
+            <li><strong>Extraction&nbsp;:</strong> Avec la commande <code>FETCH</code>, on récupère une ligne du jeu de résultats à chaque appel. Chaque ligne peut ensuite être traitée individuellement.</li>
+            <li><strong>Fermeture&nbsp;:</strong> Une fois que le curseur a fini de traiter toutes les lignes, on le ferme avec <code>CLOSE</code> pour libérer les ressources associées.</li>
         </ol>
+        
         <h2>Exemple de curseur explicite</h2>
+        <p>Voici un exemple simple de curseur explicite qui parcourt les employés d'un département spécifique et affiche leurs noms :</p>
         <div class="example">
             DECLARE<br>
             &nbsp;&nbsp;CURSOR emp_cursor IS<br>
@@ -109,10 +111,32 @@
             &nbsp;&nbsp;CLOSE emp_cursor;<br>
             END;
         </div>
+
+        <h2>Utilisation dans des boucles</h2>
+        <p>Les curseurs explicites peuvent également être utilisés dans des boucles <code>LOOP</code> pour traiter plusieurs lignes. Par exemple, vous pouvez utiliser une boucle pour récupérer toutes les lignes retournées par un curseur jusqu'à ce que toutes les lignes aient été traitées :</p>
+        <div class="example">
+            DECLARE<br>
+            &nbsp;&nbsp;CURSOR emp_cursor IS<br>
+            &nbsp;&nbsp;SELECT employee_id, last_name FROM employees WHERE department_id = 30;<br>
+            &nbsp;&nbsp;emp_id employees.employee_id%TYPE;<br>
+            &nbsp;&nbsp;emp_name employees.last_name%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;OPEN emp_cursor;<br>
+            &nbsp;&nbsp;LOOP<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;FETCH emp_cursor INTO emp_id, emp_name;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;EXIT WHEN emp_cursor%NOTFOUND;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Employé : ' || emp_name);<br>
+            &nbsp;&nbsp;END LOOP;<br>
+            &nbsp;&nbsp;CLOSE emp_cursor;<br>
+            END;
+        </div>
+
+        <h2>Fonctionnalités avancées des curseurs</h2>
+        <p>Les curseurs peuvent être paramétrés pour rendre leur utilisation plus flexible. En effet, vous pouvez passer des paramètres au curseur pour filtrer les données, ou utiliser des curseurs de type <strong>REF CURSOR</strong> pour renvoyer des jeux de résultats à des programmes externes. De plus, des curseurs peuvent être utilisés à l'intérieur de blocs imbriqués, ce qui permet de gérer des processus complexes.</p>
         
-        <h2>Fonctionnalités avancées</h2>
-        <p>Les curseurs peuvent être paramétrés, intégrés dans des boucles <code>FOR</code> et associés à des types composés pour plus de flexibilité dans vos programmes PL/SQL.</p>
-        
+        <h2>Les curseurs et les exceptions</h2>
+        <p>Il est important de gérer les erreurs lors de l'utilisation des curseurs. Par exemple, si une requête ne retourne aucune ligne, un curseur peut générer une exception qu'il faut traiter via un bloc <code>EXCEPTION</code> pour garantir que les ressources soient libérées correctement.</p>
+
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Curseurs PL/SQL
         </div>
