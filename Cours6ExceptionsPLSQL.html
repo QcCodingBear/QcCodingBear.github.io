@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,7 +75,7 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
@@ -83,15 +83,15 @@
         
         <h2>Qu'est-ce qu'une exception&nbsp;?</h2>
         <p>
-            Une <strong>exception</strong> est une erreur qui survient lors de l'exécution d'un programme PL/SQL. Il en existe deux types&nbsp;:
+            Une <strong>exception</strong> est une erreur qui survient lors de l'exécution d'un programme PL/SQL. Les exceptions permettent de gérer ces erreurs de manière structurée, assurant ainsi le bon fonctionnement du programme. Il existe deux types d'exceptions :
         </p>
         <ul>
-            <li><strong>Exceptions implicites</strong> : Déclenchées automatiquement par le serveur Oracle (par exemple, <code>TOO_MANY_ROWS</code>).</li>
-            <li><strong>Exceptions explicites</strong> : Déclenchées manuellement par l'utilisateur via l'instruction <code>RAISE</code>.</li>
+            <li><strong>Exceptions implicites</strong> : Déclenchées automatiquement par le serveur Oracle lorsqu'une erreur prédéfinie se produit, comme <code>TOO_MANY_ROWS</code> (trop de lignes retournées par une requête) ou <code>NO_DATA_FOUND</code> (aucune donnée trouvée).</li>
+            <li><strong>Exceptions explicites</strong> : Déclenchées manuellement par l'utilisateur à l'aide de l'instruction <code>RAISE</code> pour des erreurs spécifiques que l'utilisateur souhaite gérer.</li>
         </ul>
 
         <h2>Structure d'une exception en PL/SQL</h2>
-        <p>Voici comment gérer les exceptions dans un bloc PL/SQL&nbsp;:</p>
+        <p>Voici la structure d'un bloc PL/SQL qui inclut la gestion des exceptions. On y trouve un bloc <code>EXCEPTION</code> qui capte les erreurs et permet de définir des actions spécifiques selon le type d'exception :</p>
         <div class="example">
             DECLARE<br>
                 -- Déclarations<br>
@@ -99,13 +99,14 @@
                 -- Instructions exécutables<br>
             EXCEPTION<br>
                 WHEN exception_name THEN<br>
-                    -- Instructions pour gérer l'exception<br>
+                    -- Instructions pour gérer l'exception spécifique<br>
                 WHEN OTHERS THEN<br>
-                    -- Instructions pour toutes les exceptions non gérées explicitement<br>
+                    -- Instructions pour gérer toutes les autres exceptions non spécifiées<br>
             END;
         </div>
 
         <h2>Exemple : Gestion de l'exception <code>TOO_MANY_ROWS</code></h2>
+        <p>Imaginons que nous effectuons une requête qui pourrait retourner plusieurs lignes alors que nous attendons une seule. Dans ce cas, l'exception <code>TOO_MANY_ROWS</code> sera levée. Voici un exemple de gestion de cette exception :</p>
         <div class="example">
             DECLARE<br>
                 lname VARCHAR2(15);<br>
@@ -122,13 +123,15 @@
         </div>
 
         <h2>Types d'exceptions</h2>
+        <p>Les exceptions en PL/SQL peuvent être classées en trois catégories :</p>
         <ul>
-            <li><strong>Prédéfinies</strong> : Gérées directement via leur nom (exemple : <code>NO_DATA_FOUND</code>, <code>ZERO_DIVIDE</code>).</li>
-            <li><strong>Non prédéfinies</strong> : Nécessitent d’être déclarées avec <code>PRAGMA EXCEPTION_INIT</code>.</li>
-            <li><strong>Définies par l'utilisateur</strong> : Créées et déclenchées manuellement pour des besoins spécifiques.</li>
+            <li><strong>Prédéfinies</strong> : Ces erreurs sont gérées directement par Oracle avec des noms spécifiques, tels que <code>NO_DATA_FOUND</code> pour aucune donnée trouvée, <code>ZERO_DIVIDE</code> pour une division par zéro, et bien d'autres.</li>
+            <li><strong>Non prédéfinies</strong> : Ce sont des erreurs qui ne sont pas définies par Oracle mais que vous pouvez déclarer à l'aide de <code>PRAGMA EXCEPTION_INIT</code> pour les associer à des numéros d'erreur spécifiques.</li>
+            <li><strong>Définies par l'utilisateur</strong> : Ces exceptions sont créées par l'utilisateur pour répondre à des besoins particuliers. Elles peuvent être levées avec l'instruction <code>RAISE</code>.</li>
         </ul>
 
         <h2>Exemple : Déclaration et gestion d'une exception utilisateur</h2>
+        <p>Dans cet exemple, nous définissons une exception pour gérer un cas où un département spécifié n'existe pas. Si l'ID du département n'est pas trouvé dans la table, l'exception sera levée :</p>
         <div class="example">
             DECLARE<br>
                 invalid_department EXCEPTION;<br>
@@ -147,9 +150,10 @@
         </div>
 
         <h2>Fonctions utiles pour les exceptions</h2>
+        <p>Pour mieux gérer les erreurs, PL/SQL fournit des fonctions permettant d'obtenir des informations sur les erreurs qui se sont produites :</p>
         <ul>
-            <li><code>SQLCODE</code> : Retourne le code de l'erreur.</li>
-            <li><code>SQLERRM</code> : Retourne le message associé au code d'erreur.</li>
+            <li><code>SQLCODE</code> : Retourne le code numérique de l'erreur survenue. Cela permet de récupérer un code d'erreur spécifique pour le traitement.</li>
+            <li><code>SQLERRM</code> : Retourne le message d'erreur associé au code d'erreur, ce qui est très utile pour afficher un message d'erreur détaillé.</li>
         </ul>
 
         <div class="footer">
