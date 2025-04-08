@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,22 +75,25 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
         <h1>Programmation PL/SQL</h1>
         <h2>Introduction</h2>
         <p>
-            PL/SQL est un langage procédural intégré dans SQL, permettant de combiner des instructions SQL avec une logique procédurale.
+            PL/SQL (Procedural Language/Structured Query Language) est un langage procédural développé par Oracle pour étendre SQL avec des structures procédurales telles que des boucles et des conditions.
+        </p>
+        <p>
+            PL/SQL est idéal pour écrire des blocs de code réutilisables, gérer les erreurs, et effectuer des opérations complexes directement dans la base de données.
         </p>
 
         <h2>Structure d'un bloc PL/SQL</h2>
         <p>Un bloc PL/SQL est divisé en trois sections :</p>
         <ul>
-            <li><strong>DECLARE</strong> : Déclare les variables, constantes et curseurs.</li>
-            <li><strong>BEGIN</strong> : Contient les instructions SQL et PL/SQL.</li>
-            <li><strong>EXCEPTION</strong> : Gère les exceptions (erreurs).</li>
+            <li><strong>DECLARE</strong> : Pour déclarer des variables, constantes et curseurs (facultatif).</li>
+            <li><strong>BEGIN</strong> : Contient le code exécutable (obligatoire).</li>
+            <li><strong>EXCEPTION</strong> : Gère les exceptions ou erreurs (facultatif).</li>
         </ul>
         <p>Exemple :</p>
         <div class="example">
@@ -105,15 +108,25 @@
         </div>
 
         <h2>Les Variables</h2>
-        <p>Les variables sont déclarées dans la section <code>DECLARE</code>. Voici quelques types et syntaxes :</p>
+        <p>Les variables permettent de stocker des données temporairement. Voici quelques types de variables et leur utilisation :</p>
         <ul>
-            <li><strong>Type simple :</strong> <code>v_salaire NUMBER(7,2);</code></li>
-            <li><strong>Basé sur une colonne :</strong> <code>v_nomE emp.NomE%TYPE;</code></li>
-            <li><strong>Basé sur une ligne :</strong> <code>v_record emp%ROWTYPE;</code></li>
+            <li><strong>Type défini :</strong> <code>v_salaire NUMBER(7,2);</code> (Nombre avec précision).</li>
+            <li><strong>Basé sur une colonne :</strong> <code>v_nomE emp.NomE%TYPE;</code> (Même type qu'une colonne).</li>
+            <li><strong>Basé sur une ligne :</strong> <code>v_record emp%ROWTYPE;</code> (Même structure qu'une ligne).</li>
         </ul>
+        <p>Les variables peuvent également être initialisées par des requêtes SQL :</p>
+        <div class="example">
+            DECLARE<br>
+            &nbsp;&nbsp;v_nomE emp.NomE%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;SELECT NomE INTO v_nomE FROM emp WHERE EmpID = 100;<br>
+            &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Nom Employé : ' || v_nomE);<br>
+            END;
+        </div>
 
         <h2>Traitements Conditionnels</h2>
-        <h3>Structure IF...THEN...ELSIF</h3>
+        <p>PL/SQL offre plusieurs structures conditionnelles :</p>
+        <h3>1. Structure IF...THEN...ELSIF</h3>
         <div class="example">
             IF condition1 THEN<br>
             &nbsp;&nbsp;-- Instructions<br>
@@ -124,7 +137,7 @@
             END IF;
         </div>
 
-        <h3>Structure CASE</h3>
+        <h3>2. Structure CASE</h3>
         <div class="example">
             CASE expression<br>
             &nbsp;&nbsp;WHEN valeur1 THEN<br>
@@ -137,18 +150,29 @@
         </div>
 
         <h2>Traitements Répétitifs</h2>
-        <h3>La Boucle WHILE</h3>
+        <p>PL/SQL propose plusieurs boucles :</p>
+        <h3>1. La Boucle WHILE</h3>
+        <p>Répète un bloc tant qu'une condition est vraie :</p>
         <div class="example">
             WHILE condition LOOP<br>
             &nbsp;&nbsp;-- Instructions<br>
             END LOOP;
         </div>
 
-        <h3>La Boucle FOR</h3>
+        <h3>2. La Boucle FOR</h3>
         <p>Permet d'itérer sur une plage de valeurs :</p>
         <div class="example">
             FOR i IN 1..10 LOOP<br>
             &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Valeur de i: ' || i);<br>
+            END LOOP;
+        </div>
+
+        <h3>3. La Boucle LOOP...EXIT</h3>
+        <p>Répète un bloc jusqu'à ce qu'une condition soit satisfaite :</p>
+        <div class="example">
+            LOOP<br>
+            &nbsp;&nbsp;-- Instructions<br>
+            &nbsp;&nbsp;EXIT WHEN condition;<br>
             END LOOP;
         </div>
 
