@@ -52,17 +52,26 @@
     </style>
 </head>
 <body>
+      <div class="navbar">
+        <a href="Cours1RequetesComplexes.html">RequÃªtes Complexes</a>
+        <a href="Cours2JointuresSQL.html">Jointures SQL</a>
+        <a href="Cours3PLSQL.html">PL/SQL</a>
+        <a href="Cours4Curseurs.html">Curseurs</a>
+        <a href="Cours5ProceduresEtFonctionsPLSQL.html">ProcÃ©dures & Fonctions</a>
+        <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
+        <a href="Cours7PackageSQL.html">Packages SQL</a>
+    </div>
     <div class="container">
         <h1>Les Jointures SQL</h1>
         <h2>Introduction</h2>
         <p>
-            Les jointures SQL permettent de combiner des données provenant de deux tables ou plus en se basant sur une condition commune.
+            Les jointures SQL permettent de combiner des donnÃ©es provenant de deux tables ou plus en se basant sur une condition commune.
             Voici les principaux types de jointures et leurs utilisations.
         </p>
 
         <h2>Types de Jointures</h2>
         <h3>1. Jointure Interne (<code>INNER JOIN</code>)</h3>
-        <p>Combine les lignes des deux tables où une correspondance est trouvée entre les clés spécifiées.</p>
+        <p>Combine les lignes des deux tables oÃ¹ une correspondance est trouvÃ©e entre les clÃ©s spÃ©cifiÃ©es.</p>
         <div class="example">
             SELECT &lt;colonnes&gt;<br>
             FROM A<br>
@@ -71,7 +80,7 @@
         </div>
 
         <h3>2. Jointure Gauche (<code>LEFT JOIN</code>)</h3>
-        <p>Renvoie toutes les lignes de la table de gauche (<code>A</code>), ainsi que les correspondances dans la table de droite (<code>B</code>). Si aucune correspondance n'est trouvée, les colonnes de <code>B</code> contiennent <code>NULL</code>.</p>
+        <p>Renvoie toutes les lignes de la table de gauche (<code>A</code>), ainsi que les correspondances dans la table de droite (<code>B</code>). Si aucune correspondance n'est trouvÃ©e, les colonnes de <code>B</code> contiennent <code>NULL</code>.</p>
         <div class="example">
             SELECT &lt;colonnes&gt;<br>
             FROM A<br>
@@ -80,7 +89,7 @@
         </div>
 
         <h3>3. Jointure Droite (<code>RIGHT JOIN</code>)</h3>
-        <p>Renvoie toutes les lignes de la table de droite (<code>B</code>), ainsi que les correspondances dans la table de gauche (<code>A</code>). Si aucune correspondance n'est trouvée, les colonnes de <code>A</code> contiennent <code>NULL</code>.</p>
+        <p>Renvoie toutes les lignes de la table de droite (<code>B</code>), ainsi que les correspondances dans la table de gauche (<code>A</code>). Si aucune correspondance n'est trouvÃ©e, les colonnes de <code>A</code> contiennent <code>NULL</code>.</p>
         <div class="example">
             SELECT &lt;colonnes&gt;<br>
             FROM A<br>
@@ -88,7 +97,7 @@
             ON A.clef = B.clef;
         </div>
 
-        <h3>4. Jointure Complète (<code>FULL OUTER JOIN</code>)</h3>
+        <h3>4. Jointure ComplÃ¨te (<code>FULL OUTER JOIN</code>)</h3>
         <p>Renvoie toutes les lignes des deux tables, avec des <code>NULL</code> pour les colonnes manquantes dans les lignes non correspondantes. Cette jointure est disponible dans certains SGBD (par exemple : Oracle).</p>
         <div class="example">
             SELECT &lt;colonnes&gt;<br>
@@ -117,7 +126,7 @@
         </div>
 
         <h3>2. Combinaison de Jointures</h3>
-        <p>Pour obtenir toutes les lignes des deux tables, y compris celles sans correspondance (équivalent à <code>FULL OUTER JOIN</code> dans les SGBD ne le supportant pas) :</p>
+        <p>Pour obtenir toutes les lignes des deux tables, y compris celles sans correspondance (Ã©quivalent Ã  <code>FULL OUTER JOIN</code> dans les SGBD ne le supportant pas) :</p>
         <div class="example">
             SELECT &lt;colonnes&gt;<br>
             FROM A<br>
