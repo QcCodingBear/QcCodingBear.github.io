@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-                .navbar {
+        .navbar {
             background-color: #0056b3;
             display: flex;
             flex-wrap: wrap;
@@ -75,70 +75,79 @@
         <a href="Cours4Curseurs.html">Curseurs</a>
         <a href="Cours5ProceduresEtFonctionsPLSQL.html">Procédures & Fonctions</a>
         <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
-         <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
+        <a href="Cours7BlocsImbriques.html">Blocs Imbriqués</a>
         <a href="Cours8PackageSQL.html">Packages SQL</a>
     </div>
     <div class="container">
         <h1>Requêtes Complexes SQL</h1>
-        <h2>Plan du cours</h2>
-        <ul>
-            <li>Les contraintes de colonnes avec CHECK</li>
-            <li>Les index</li>
-            <li>Les transactions</li>
-            <li>Les fonctions sur les dates</li>
-            <li>Les vues</li>
-        </ul>
-
         <h2>Contraintes de colonnes</h2>
-        <p>La contrainte <code>CHECK</code> permet de valider les valeurs d’une colonne selon une condition.</p>
-        <p>Exemples :</p>
+        <p>Les contraintes de colonnes permettent de garantir l'intégrité des données en imposant des règles sur les valeurs insérées dans une colonne.</p>
+        <p>La contrainte <code>CHECK</code> valide les valeurs selon une condition définie. Par exemple :</p>
         <ul>
-            <li><code>CHECK (nom_colonne > 0)</code></li>
-            <li><code>CHECK (nom_colonne BETWEEN 1 AND 10)</code></li>
-            <li><code>CHECK (nom_colonne LIKE 'A%')</code></li>
+            <li><code>CHECK (nom_colonne > 0)</code> : garantit que la valeur est supérieure à 0.</li>
+            <li><code>CHECK (nom_colonne BETWEEN 1 AND 10)</code> : limite les valeurs entre 1 et 10.</li>
+            <li><code>CHECK (nom_colonne LIKE 'A%')</code> : vérifie que la valeur commence par "A".</li>
         </ul>
-        <p>Utilisation avancée : dépendance entre colonnes (exemple : une date de fin doit être supérieure à une date de début).</p>
+        <p>Cas avancé : si une colonne dépend d'une autre, la contrainte doit être implémentée dans la logique applicative. Exemple : <em>la date de fin doit être supérieure à la date de début.</em></p>
 
         <h2>Les Index</h2>
-        <p>Les index accélèrent l’accès aux lignes d’une table et améliorent les performances des requêtes. Ils peuvent être créés automatiquement ou manuellement.</p>
+        <p>Les index améliorent la rapidité d'accès aux données en réduisant le temps nécessaire pour localiser des enregistrements.</p>
+        <p>On peut créer des index :</p>
+        <ul>
+            <li><strong>Automatiquement</strong> : pour les colonnes ayant des contraintes <code>PRIMARY KEY</code> ou <code>UNIQUE</code>.</li>
+            <li><strong>Manuellement</strong> : pour optimiser les requêtes fréquentes ou sur des colonnes spécifiques.</li>
+        </ul>
         <div class="example">
             CREATE INDEX idx_nom_table ON nom_table (colonne1, colonne2);
         </div>
-        <p>Exemple : Créer un index sur deux colonnes :</p>
+        <p>Exemple avancé : index croissant et décroissant sur deux colonnes :</p>
         <div class="example">
-            CREATE INDEX idx_employe_nom_prenom ON employe (nom, prenom DESC);
+            CREATE INDEX idx_employe_nom_prenom ON employe (nom ASC, prenom DESC);
         </div>
+        <p>Attention : trop d'index peuvent ralentir les opérations d'insertion ou de mise à jour.</p>
 
         <h2>Les Transactions</h2>
-        <p>Une transaction regroupe plusieurs opérations en une unité logique de travail, garantissant la cohérence des données.</p>
+        <p>Une transaction regroupe des opérations DML (Data Manipulation Language) pour assurer l'intégrité des données.</p>
         <ul>
-            <li><code>COMMIT</code>: valide les modifications.</li>
-            <li><code>ROLLBACK</code>: annule les modifications.</li>
-            <li><code>SAVEPOINT</code>: définit un point de sauvegarde intermédiaire.</li>
+            <li><code>COMMIT</code> : applique définitivement les modifications.</li>
+            <li><code>ROLLBACK</code> : annule les modifications de la transaction courante.</li>
+            <li><code>SAVEPOINT</code> : définit un point de sauvegarde intermédiaire pour un retour partiel.</li>
         </ul>
-        <p>Exemple d’utilisation :</p>
+        <p>Exemple d'utilisation :</p>
         <div class="example">
             INSERT INTO table VALUES (...);<br>
-            SAVEPOINT save1;<br>
-            UPDATE table SET colonne = ...;<br>
-            ROLLBACK TO save1;
+            SAVEPOINT point1;<br>
+            UPDATE table SET colonne = 'valeur';<br>
+            ROLLBACK TO point1; -- Annule jusqu'au point1
         </div>
+        <p>Une transaction commence automatiquement après un <code>COMMIT</code>, un <code>ROLLBACK</code> ou une connexion à la base.</p>
 
         <h2>Fonctions sur les Dates</h2>
-        <p>SQL offre des fonctions pour manipuler les dates, comme <code>SYSDATE</code> pour la date actuelle.</p>
-        <p>Exemple : Ajouter 30 jours à une date :</p>
+        <p>Les dates peuvent être manipulées grâce à des fonctions SQL. Par exemple :</p>
+        <ul>
+            <li><code>SYSDATE</code> : retourne la date et l'heure actuelles.</li>
+            <li><code>TO_DATE</code> : convertit une chaîne en date.</li>
+            <li><code>TO_CHAR</code> : formate une date en chaîne.</li>
+        </ul>
+        <p>Exemple : Ajouter 30 jours à la date actuelle :</p>
         <div class="example">
             SELECT SYSDATE + 30 AS "Date + 30" FROM DUAL;
         </div>
+        <p>Calculs possibles :</p>
+        <ul>
+            <li><code>Date1 - Date2</code> : renvoie la différence en jours.</li>
+            <li><code>Date + Nombre</code> : ajoute des jours.</li>
+        </ul>
 
         <h2>Les Vues</h2>
-        <p>Une vue est une table virtuelle basée sur une requête. Elle permet de simplifier les accès aux données et de limiter leur exposition.</p>
+        <p>Une vue est une requête enregistrée qui apparaît comme une table virtuelle. Elle est utilisée pour simplifier l'accès aux données complexes ou restreindre l'accès à certaines colonnes.</p>
         <div class="example">
             CREATE VIEW vue_exemple AS<br>
             SELECT colonne1, colonne2<br>
             FROM table<br>
             WHERE condition;
         </div>
+        <p>Les vues peuvent être utilisées pour limiter l'accès aux données sensibles ou simplifier des requêtes complexes.</p>
 
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Requêtes Complexes SQL
