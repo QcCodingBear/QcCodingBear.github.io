@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur les Procédures et Fonctions en PL/SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Procédures et Fonctions en PL/SQL</h1>
+        <h2>Objectifs</h2>
+        <ul>
+            <li>Distinguer les blocs anonymes des sous-programmes (procédures et fonctions).</li>
+            <li>Créer une procédure et l’appeler à partir d’un bloc anonyme.</li>
+            <li>Créer des fonctions simples, avec ou sans paramètres.</li>
+            <li>Différencier les paramètres réels et formels.</li>
+            <li>Utiliser différents modes de passage de paramètres.</li>
+            <li>Gérer les exceptions dans les procédures.</li>
+            <li>Supprimer une procédure ou une fonction.</li>
+        </ul>
+
+        <h2>Différence entre blocs anonymes et sous-programmes</h2>
+        <p>Les sous-programmes (procédures et fonctions) ont un nom, sont compilés une seule fois, stockés dans la base de données Oracle, et peuvent être réutilisés et appelés par d’autres applications. En revanche, les blocs anonymes :</p>
+        <ul>
+            <li>Ne portent pas de nom.</li>
+            <li>Sont compilés à chaque exécution.</li>
+            <li>Ne sont pas stockés dans la base de données.</li>
+        </ul>
+
+        <h2>Procédure : Exemple</h2>
+        <div class="example">
+            CREATE OR REPLACE PROCEDURE add_dept IS<br>
+            &nbsp;&nbsp;dept_id dept.department_id%TYPE;<br>
+            &nbsp;&nbsp;dept_name dept.department_name%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;dept_id := 280;<br>
+            &nbsp;&nbsp;dept_name := 'ST-Curriculum';<br>
+            &nbsp;&nbsp;INSERT INTO dept (department_id, department_name)<br>
+            &nbsp;&nbsp;VALUES (dept_id, dept_name);<br>
+            &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Inserted ' || SQL%ROWCOUNT || ' row.');<br>
+            END;<br>
+            /
+        </div>
+
+        <h2>Modes de passage de paramètres</h2>
+        <p>Il existe trois modes de paramètres :</p>
+        <ul>
+            <li><strong>IN</strong> : Pour transmettre des valeurs à la procédure (valeur par défaut).</li>
+            <li><strong>OUT</strong> : Pour retourner des valeurs.</li>
+            <li><strong>IN OUT</strong> : Sert à la fois pour l’entrée et la sortie.</li>
+        </ul>
+
+        <h2>Fonction : Exemple</h2>
+        <div class="example">
+            CREATE OR REPLACE FUNCTION check_sal RETURN BOOLEAN IS<br>
+            &nbsp;&nbsp;empno employees.employee_id%TYPE;<br>
+            &nbsp;&nbsp;sal employees.salary%TYPE;<br>
+            &nbsp;&nbsp;avg_sal employees.salary%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;SELECT salary INTO sal FROM employees WHERE employee_id = empno;<br>
+            &nbsp;&nbsp;SELECT AVG(salary) INTO avg_sal FROM employees;<br>
+            &nbsp;&nbsp;IF sal > avg_sal THEN<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;RETURN TRUE;<br>
+            &nbsp;&nbsp;ELSE<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;RETURN FALSE;<br>
+            &nbsp;&nbsp;END IF;<br>
+            END;<br>
+            /
+        </div>
+
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur les Procédures et Fonctions en PL/SQL
+        </div>
+    </div>
+</body>
+</html>

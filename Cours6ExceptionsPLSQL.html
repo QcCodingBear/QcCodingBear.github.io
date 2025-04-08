@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur la Gestion des Exceptions en PL/SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>La Gestion des Exceptions en PL/SQL</h1>
+        
+        <h2>Qu'est-ce qu'une exception&nbsp;?</h2>
+        <p>
+            Une <strong>exception</strong> est une erreur qui survient lors de l'exécution d'un programme PL/SQL. Il en existe deux types&nbsp;:
+        </p>
+        <ul>
+            <li><strong>Exceptions implicites</strong> : Déclenchées automatiquement par le serveur Oracle (par exemple, <code>TOO_MANY_ROWS</code>).</li>
+            <li><strong>Exceptions explicites</strong> : Déclenchées manuellement par l'utilisateur via l'instruction <code>RAISE</code>.</li>
+        </ul>
+
+        <h2>Structure d'une exception en PL/SQL</h2>
+        <p>Voici comment gérer les exceptions dans un bloc PL/SQL&nbsp;:</p>
+        <div class="example">
+            DECLARE<br>
+                -- Déclarations<br>
+            BEGIN<br>
+                -- Instructions exécutables<br>
+            EXCEPTION<br>
+                WHEN exception_name THEN<br>
+                    -- Instructions pour gérer l'exception<br>
+                WHEN OTHERS THEN<br>
+                    -- Instructions pour toutes les exceptions non gérées explicitement<br>
+            END;
+        </div>
+
+        <h2>Exemple : Gestion de l'exception <code>TOO_MANY_ROWS</code></h2>
+        <div class="example">
+            DECLARE<br>
+                lname VARCHAR2(15);<br>
+            BEGIN<br>
+                SELECT last_name INTO lname<br>
+                FROM employees<br>
+                WHERE first_name = 'John';<br>
+                DBMS_OUTPUT.PUT_LINE('Le nom de famille est : ' || lname);<br>
+            EXCEPTION<br>
+                WHEN TOO_MANY_ROWS THEN<br>
+                    DBMS_OUTPUT.PUT_LINE('Il y a plusieurs employés avec ce prénom.');<br>
+            END;<br>
+            /
+        </div>
+
+        <h2>Types d'exceptions</h2>
+        <ul>
+            <li><strong>Prédéfinies</strong> : Gérées directement via leur nom (exemple : <code>NO_DATA_FOUND</code>, <code>ZERO_DIVIDE</code>).</li>
+            <li><strong>Non prédéfinies</strong> : Nécessitent d’être déclarées avec <code>PRAGMA EXCEPTION_INIT</code>.</li>
+            <li><strong>Définies par l'utilisateur</strong> : Créées et déclenchées manuellement pour des besoins spécifiques.</li>
+        </ul>
+
+        <h2>Exemple : Déclaration et gestion d'une exception utilisateur</h2>
+        <div class="example">
+            DECLARE<br>
+                invalid_department EXCEPTION;<br>
+            BEGIN<br>
+                UPDATE departments<br>
+                SET department_name = 'Nouveau Nom'<br>
+                WHERE department_id = 9999;<br>
+                IF SQL%NOTFOUND THEN<br>
+                    RAISE invalid_department;<br>
+                END IF;<br>
+            EXCEPTION<br>
+                WHEN invalid_department THEN<br>
+                    DBMS_OUTPUT.PUT_LINE('Aucun département avec cet ID.');<br>
+            END;<br>
+            /
+        </div>
+
+        <h2>Fonctions utiles pour les exceptions</h2>
+        <ul>
+            <li><code>SQLCODE</code> : Retourne le code de l'erreur.</li>
+            <li><code>SQLERRM</code> : Retourne le message associé au code d'erreur.</li>
+        </ul>
+
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur la Gestion des Exceptions en PL/SQL
+        </div>
+    </div>
+</body>
+</html>

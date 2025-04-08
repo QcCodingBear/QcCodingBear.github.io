@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur les Jointures SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Les Jointures SQL</h1>
+        <h2>Introduction</h2>
+        <p>
+            Les jointures SQL permettent de combiner des données provenant de deux tables ou plus en se basant sur une condition commune.
+            Voici les principaux types de jointures et leurs utilisations.
+        </p>
+
+        <h2>Types de Jointures</h2>
+        <h3>1. Jointure Interne (<code>INNER JOIN</code>)</h3>
+        <p>Combine les lignes des deux tables où une correspondance est trouvée entre les clés spécifiées.</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            INNER JOIN B<br>
+            ON A.clef = B.clef;
+        </div>
+
+        <h3>2. Jointure Gauche (<code>LEFT JOIN</code>)</h3>
+        <p>Renvoie toutes les lignes de la table de gauche (<code>A</code>), ainsi que les correspondances dans la table de droite (<code>B</code>). Si aucune correspondance n'est trouvée, les colonnes de <code>B</code> contiennent <code>NULL</code>.</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            LEFT JOIN B<br>
+            ON A.clef = B.clef;
+        </div>
+
+        <h3>3. Jointure Droite (<code>RIGHT JOIN</code>)</h3>
+        <p>Renvoie toutes les lignes de la table de droite (<code>B</code>), ainsi que les correspondances dans la table de gauche (<code>A</code>). Si aucune correspondance n'est trouvée, les colonnes de <code>A</code> contiennent <code>NULL</code>.</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            RIGHT JOIN B<br>
+            ON A.clef = B.clef;
+        </div>
+
+        <h3>4. Jointure Complète (<code>FULL OUTER JOIN</code>)</h3>
+        <p>Renvoie toutes les lignes des deux tables, avec des <code>NULL</code> pour les colonnes manquantes dans les lignes non correspondantes. Cette jointure est disponible dans certains SGBD (par exemple : Oracle).</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            FULL OUTER JOIN B<br>
+            ON A.clef = B.clef;
+        </div>
+
+        <h2>Cas Particuliers</h2>
+        <h3>1. Lignes sans Correspondance</h3>
+        <p>Pour obtenir uniquement les lignes sans correspondance dans <code>B</code> :</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            LEFT JOIN B<br>
+            ON A.clef = B.clef<br>
+            WHERE B.clef IS NULL;
+        </div>
+        <p>Pour obtenir uniquement les lignes sans correspondance dans <code>A</code> :</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            RIGHT JOIN B<br>
+            ON A.clef = B.clef<br>
+            WHERE A.clef IS NULL;
+        </div>
+
+        <h3>2. Combinaison de Jointures</h3>
+        <p>Pour obtenir toutes les lignes des deux tables, y compris celles sans correspondance (équivalent à <code>FULL OUTER JOIN</code> dans les SGBD ne le supportant pas) :</p>
+        <div class="example">
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            LEFT JOIN B<br>
+            ON A.clef = B.clef<br>
+            UNION<br>
+            SELECT &lt;colonnes&gt;<br>
+            FROM A<br>
+            RIGHT JOIN B<br>
+            ON A.clef = B.clef;
+        </div>
+
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur les Jointures SQL
+        </div>
+    </div>
+</body>
+</html>

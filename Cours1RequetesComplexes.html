@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur les Requêtes Complexes SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Requêtes Complexes SQL</h1>
+        <h2>Plan du cours</h2>
+        <ul>
+            <li>Les contraintes de colonnes avec CHECK</li>
+            <li>Les index</li>
+            <li>Les transactions</li>
+            <li>Les fonctions sur les dates</li>
+            <li>Les vues</li>
+        </ul>
+
+        <h2>Contraintes de colonnes</h2>
+        <p>La contrainte <code>CHECK</code> permet de valider les valeurs d’une colonne selon une condition.</p>
+        <p>Exemples :</p>
+        <ul>
+            <li><code>CHECK (nom_colonne > 0)</code></li>
+            <li><code>CHECK (nom_colonne BETWEEN 1 AND 10)</code></li>
+            <li><code>CHECK (nom_colonne LIKE 'A%')</code></li>
+        </ul>
+        <p>Utilisation avancée : dépendance entre colonnes (exemple : une date de fin doit être supérieure à une date de début).</p>
+
+        <h2>Les Index</h2>
+        <p>Les index accélèrent l’accès aux lignes d’une table et améliorent les performances des requêtes. Ils peuvent être créés automatiquement ou manuellement.</p>
+        <div class="example">
+            CREATE INDEX idx_nom_table ON nom_table (colonne1, colonne2);
+        </div>
+        <p>Exemple : Créer un index sur deux colonnes :</p>
+        <div class="example">
+            CREATE INDEX idx_employe_nom_prenom ON employe (nom, prenom DESC);
+        </div>
+
+        <h2>Les Transactions</h2>
+        <p>Une transaction regroupe plusieurs opérations en une unité logique de travail, garantissant la cohérence des données.</p>
+        <ul>
+            <li><code>COMMIT</code>: valide les modifications.</li>
+            <li><code>ROLLBACK</code>: annule les modifications.</li>
+            <li><code>SAVEPOINT</code>: définit un point de sauvegarde intermédiaire.</li>
+        </ul>
+        <p>Exemple d’utilisation :</p>
+        <div class="example">
+            INSERT INTO table VALUES (...);<br>
+            SAVEPOINT save1;<br>
+            UPDATE table SET colonne = ...;<br>
+            ROLLBACK TO save1;
+        </div>
+
+        <h2>Fonctions sur les Dates</h2>
+        <p>SQL offre des fonctions pour manipuler les dates, comme <code>SYSDATE</code> pour la date actuelle.</p>
+        <p>Exemple : Ajouter 30 jours à une date :</p>
+        <div class="example">
+            SELECT SYSDATE + 30 AS "Date + 30" FROM DUAL;
+        </div>
+
+        <h2>Les Vues</h2>
+        <p>Une vue est une table virtuelle basée sur une requête. Elle permet de simplifier les accès aux données et de limiter leur exposition.</p>
+        <div class="example">
+            CREATE VIEW vue_exemple AS<br>
+            SELECT colonne1, colonne2<br>
+            FROM table<br>
+            WHERE condition;
+        </div>
+
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur les Requêtes Complexes SQL
+        </div>
+    </div>
+</body>
+</html>

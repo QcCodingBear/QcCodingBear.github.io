@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur les Packages SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Les Packages SQL</h1>
+        <h2>Qu'est-ce que c'est ?</h2>
+        <p>
+            Un <strong>package SQL</strong> est un regroupement d'éléments de programmation <strong>PL/SQL</strong>, comme des procédures, des fonctions, des variables, et plus encore. 
+            Il agit comme un conteneur permettant d'organiser et de réutiliser ces éléments.
+        </p>
+
+        <h2>Structure d'un Package</h2>
+        <p>Un package est divisé en deux parties :</p>
+        <ul>
+            <li><strong>Spécification (spec)</strong> : Déclare les éléments publics accessibles de l'extérieur.
+ <div class="example">
+CREATE OR REPLACE PACKAGE my_package AS<br>
+    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2);<br>
+    FUNCTION get_employee_count RETURN NUMBER;<br>
+END my_package;<br>
+        </div>
+</li>
+            <li><strong>Corps (body)</strong> : Contient les définitions des éléments déclarés dans la spécification.
+ <div class="example">
+CREATE OR REPLACE PACKAGE BODY my_package AS<br>
+    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2) IS<br>
+    BEGIN<br>
+        -- Logic for adding an employee<br>
+        DBMS_OUTPUT.PUT_LINE('Employee added: ' || emp_name);<br>
+    END add_employee;<br><br>
+
+    FUNCTION get_employee_count RETURN NUMBER IS<br>
+        emp_count NUMBER;<br>
+    BEGIN<br>
+        -- Logic to count employees<br>
+        emp_count := 100; -- Placeholder value<br>
+        RETURN emp_count;<br>
+    END get_employee_count;<br>
+END my_package;<br>
+        </div>
+</li>
+        </ul>
+        
+        <h2>À quoi ça sert ?</h2>
+        <p>Les packages servent à :</p>
+        <ul>
+            <li><strong>Organiser</strong> le code par fonctionnalités liées.</li>
+            <li><strong>Réutiliser</strong> des éléments dans différents contextes.</li>
+            <li><strong>Encapsuler</strong> la logique interne et limiter l'accès à certains éléments.</li>
+            <li><strong>Améliorer les performances</strong> en chargeant efficacement le package en mémoire.</li>
+        </ul>
+
+        <h2>Exemple de Package</h2>
+        <p><strong>Spécification :</strong></p>
+<p>Imaginons un package pour gérer un système d'inventaire</p>
+        <div class="example">
+            CREATE OR REPLACE PACKAGE inventory_pkg AS<br>
+                PROCEDURE update_stock(product_id NUMBER, quantity NUMBER);<br>
+                FUNCTION get_stock(product_id NUMBER) RETURN NUMBER;<br>
+            END inventory_pkg;
+        </div>
+        
+        <p><strong>Corps :</strong></p>
+        <div class="example">
+            CREATE OR REPLACE PACKAGE BODY inventory_pkg AS<br>
+                PROCEDURE update_stock(product_id NUMBER, quantity NUMBER) IS<br>
+                BEGIN<br>
+                    DBMS_OUTPUT.PUT_LINE('Stock mis à jour pour le produit : ' || product_id);<br>
+                END update_stock;<br><br>
+                FUNCTION get_stock(product_id NUMBER) RETURN NUMBER IS<br>
+                    stock NUMBER;<br>
+                BEGIN<br>
+                    stock := 50; -- Valeur fictive<br>
+                    RETURN stock;<br>
+                END get_stock;<br>
+            END inventory_pkg;
+        </div>
+
+        <p><strong>Utilisation :</strong></p>
+        <div class="example">
+            BEGIN<br>
+                inventory_pkg.update_stock(101, 20);<br>
+                DBMS_OUTPUT.PUT_LINE('Stock actuel : ' || inventory_pkg.get_stock(101));<br>
+            END;
+        </div>
+
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur les Packages SQL
+        </div>
+    </div>
+</body>
+</html>

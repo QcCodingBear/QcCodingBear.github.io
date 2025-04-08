@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours sur les Curseurs PL/SQL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        code {
+            background: #f4f4f9;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #d63384;
+        }
+        .example {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0056b3;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Les Curseurs en PL/SQL</h1>
+        <h2>Qu'est-ce qu'un curseur&nbsp;?</h2>
+        <p>
+            Chaque instruction SQL exécutée par Oracle utilise un <strong>curseur implicite</strong>, mais on peut également créer des <strong>curseurs explicites</strong> pour des besoins spécifiques. 
+        </p>
+        <h2>Types de curseurs</h2>
+        <ul>
+            <li><strong>Curseur implicite</strong>&nbsp;: Automatiquement géré par Oracle pour les instructions SQL comme <code>INSERT</code>, <code>UPDATE</code>, ou <code>SELECT</code>.</li>
+            <li><strong>Curseur explicite</strong>&nbsp;: Déclaré et contrôlé manuellement par le programmeur pour traiter des jeux de données multi-lignes.</li>
+        </ul>
+        
+        <h2>Étapes d'utilisation des curseurs explicites</h2>
+        <ol>
+            <li><strong>Déclaration&nbsp;:</strong> Créer une zone SQL en définissant le curseur.</li>
+            <li><strong>Ouverture&nbsp;:</strong> Utiliser <code>OPEN</code> pour exécuter la requête SQL.</li>
+            <li><strong>Extraction&nbsp;:</strong> Récupérer les lignes une par une avec <code>FETCH</code>.</li>
+            <li><strong>Fermeture&nbsp;:</strong> Libérer les ressources avec <code>CLOSE</code>.</li>
+        </ol>
+        <h2>Exemple de curseur explicite</h2>
+        <div class="example">
+            DECLARE<br>
+            &nbsp;&nbsp;CURSOR emp_cursor IS<br>
+            &nbsp;&nbsp;SELECT employee_id, last_name FROM employees WHERE department_id = 30;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;OPEN emp_cursor;<br>
+            &nbsp;&nbsp;FETCH emp_cursor INTO emp_id, emp_name;<br>
+            &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Employé : ' || emp_name);<br>
+            &nbsp;&nbsp;CLOSE emp_cursor;<br>
+            END;
+        </div>
+        
+        <h2>Fonctionnalités avancées</h2>
+        <p>Les curseurs peuvent être paramétrés, intégrés dans des boucles <code>FOR</code> et associés à des types composés pour plus de flexibilité dans vos programmes PL/SQL.</p>
+        
+        <div class="footer">
+            &copy; 2025 - Cours interactif sur les Curseurs PL/SQL
+        </div>
+    </div>
+</body>
+</html>
