@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours sur les Requêtes Complexes SQL</title>
+    <title>Cours sur les RequÃªtes Complexes SQL</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,8 +52,17 @@
     </style>
 </head>
 <body>
+      <div class="navbar">
+        <a href="Cours1RequetesComplexes.html">RequÃªtes Complexes</a>
+        <a href="Cours2JointuresSQL.html">Jointures SQL</a>
+        <a href="Cours3PLSQL.html">PL/SQL</a>
+        <a href="Cours4Curseurs.html">Curseurs</a>
+        <a href="Cours5ProceduresEtFonctionsPLSQL.html">ProcÃ©dures & Fonctions</a>
+        <a href="Cours6ExceptionsPLSQL.html">Exceptions PL/SQL</a>
+        <a href="Cours7PackageSQL.html">Packages SQL</a>
+    </div>
     <div class="container">
-        <h1>Requêtes Complexes SQL</h1>
+        <h1>RequÃªtes Complexes SQL</h1>
         <h2>Plan du cours</h2>
         <ul>
             <li>Les contraintes de colonnes avec CHECK</li>
@@ -64,33 +73,33 @@
         </ul>
 
         <h2>Contraintes de colonnes</h2>
-        <p>La contrainte <code>CHECK</code> permet de valider les valeurs d’une colonne selon une condition.</p>
+        <p>La contrainte <code>CHECK</code> permet de valider les valeurs dâ€™une colonne selon une condition.</p>
         <p>Exemples :</p>
         <ul>
             <li><code>CHECK (nom_colonne > 0)</code></li>
             <li><code>CHECK (nom_colonne BETWEEN 1 AND 10)</code></li>
             <li><code>CHECK (nom_colonne LIKE 'A%')</code></li>
         </ul>
-        <p>Utilisation avancée : dépendance entre colonnes (exemple : une date de fin doit être supérieure à une date de début).</p>
+        <p>Utilisation avancÃ©e : dÃ©pendance entre colonnes (exemple : une date de fin doit Ãªtre supÃ©rieure Ã  une date de dÃ©but).</p>
 
         <h2>Les Index</h2>
-        <p>Les index accélèrent l’accès aux lignes d’une table et améliorent les performances des requêtes. Ils peuvent être créés automatiquement ou manuellement.</p>
+        <p>Les index accÃ©lÃ¨rent lâ€™accÃ¨s aux lignes dâ€™une table et amÃ©liorent les performances des requÃªtes. Ils peuvent Ãªtre crÃ©Ã©s automatiquement ou manuellement.</p>
         <div class="example">
             CREATE INDEX idx_nom_table ON nom_table (colonne1, colonne2);
         </div>
-        <p>Exemple : Créer un index sur deux colonnes :</p>
+        <p>Exemple : CrÃ©er un index sur deux colonnes :</p>
         <div class="example">
             CREATE INDEX idx_employe_nom_prenom ON employe (nom, prenom DESC);
         </div>
 
         <h2>Les Transactions</h2>
-        <p>Une transaction regroupe plusieurs opérations en une unité logique de travail, garantissant la cohérence des données.</p>
+        <p>Une transaction regroupe plusieurs opÃ©rations en une unitÃ© logique de travail, garantissant la cohÃ©rence des donnÃ©es.</p>
         <ul>
             <li><code>COMMIT</code>: valide les modifications.</li>
             <li><code>ROLLBACK</code>: annule les modifications.</li>
-            <li><code>SAVEPOINT</code>: définit un point de sauvegarde intermédiaire.</li>
+            <li><code>SAVEPOINT</code>: dÃ©finit un point de sauvegarde intermÃ©diaire.</li>
         </ul>
-        <p>Exemple d’utilisation :</p>
+        <p>Exemple dâ€™utilisation :</p>
         <div class="example">
             INSERT INTO table VALUES (...);<br>
             SAVEPOINT save1;<br>
@@ -100,13 +109,13 @@
 
         <h2>Fonctions sur les Dates</h2>
         <p>SQL offre des fonctions pour manipuler les dates, comme <code>SYSDATE</code> pour la date actuelle.</p>
-        <p>Exemple : Ajouter 30 jours à une date :</p>
+        <p>Exemple : Ajouter 30 jours Ã  une date :</p>
         <div class="example">
             SELECT SYSDATE + 30 AS "Date + 30" FROM DUAL;
         </div>
 
         <h2>Les Vues</h2>
-        <p>Une vue est une table virtuelle basée sur une requête. Elle permet de simplifier les accès aux données et de limiter leur exposition.</p>
+        <p>Une vue est une table virtuelle basÃ©e sur une requÃªte. Elle permet de simplifier les accÃ¨s aux donnÃ©es et de limiter leur exposition.</p>
         <div class="example">
             CREATE VIEW vue_exemple AS<br>
             SELECT colonne1, colonne2<br>
@@ -115,7 +124,7 @@
         </div>
 
         <div class="footer">
-            &copy; 2025 - Cours interactif sur les Requêtes Complexes SQL
+            &copy; 2025 - Cours interactif sur les RequÃªtes Complexes SQL
         </div>
     </div>
 </body>
