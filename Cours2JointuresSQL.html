@@ -177,6 +177,59 @@
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Jointures SQL
         </div>
+        <h2>Exercices Pratiques</h2>
+<div class="container">
+    <h3>Exercice 1 : Trouver les produits commandés</h3>
+    <p>
+        Vous disposez des tables suivantes :
+    </p>
+    <ul>
+        <li><code>produits</code> (id, nom, prix)</li>
+        <li><code>commandes</code> (id, produit_id, quantite)</li>
+    </ul>
+    <p>Écrivez une requête SQL pour obtenir le nom de chaque produit et la quantité commandée. Incluez les produits sans commandes.</p>
+    <button onclick="toggleCorrection('corrige1')">Afficher / Masquer le Corrigé</button>
+    <div id="corrige1" style="display:none; margin-top: 10px;">
+        <div class="example">
+            SELECT produits.nom, commandes.quantite<br>
+            FROM produits<br>
+            LEFT JOIN commandes<br>
+            ON produits.id = commandes.produit_id;
+        </div>
+    </div>
+
+    <h3>Exercice 2 : Identifier les clients sans commandes</h3>
+    <p>
+        Vous disposez des tables suivantes :
+    </p>
+    <ul>
+        <li><code>clients</code> (id, nom)</li>
+        <li><code>commandes</code> (id, client_id, date_commande)</li>
+    </ul>
+    <p>Écrivez une requête SQL pour trouver les clients qui n'ont passé aucune commande.</p>
+    <button onclick="toggleCorrection('corrige2')">Afficher / Masquer le Corrigé</button>
+    <div id="corrige2" style="display:none; margin-top: 10px;">
+        <div class="example">
+            SELECT clients.nom<br>
+            FROM clients<br>
+            LEFT JOIN commandes<br>
+            ON clients.id = commandes.client_id<br>
+            WHERE commandes.id IS NULL;
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCorrection(id) {
+        const element = document.getElementById(id);
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>
+
     </div>
 </body>
 </html>
