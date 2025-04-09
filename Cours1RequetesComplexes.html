@@ -152,6 +152,118 @@
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Requêtes Complexes SQL
         </div>
+
+<div class="container">
+    <h2>Exercices Pratiques</h2>
+
+    <h3>Exercice 1 : Gestion des Contraintes et Transactions</h3>
+    <p>
+        Vous travaillez sur une base de données pour une école. Vous avez une table <code>Etudiant</code> avec les colonnes suivantes :
+    </p>
+    <ul>
+        <li><code>id_etudiant</code> (entier, clé primaire)</li>
+        <li><code>nom</code> (texte, non nul)</li>
+        <li><code>age</code> (entier, entre 18 et 30)</li>
+        <li><code>date_inscription</code> (date, doit être postérieure à <code>SYSDATE</code>)</li>
+    </ul>
+    <p>Étapes :</p>
+    <ol>
+        <li>Créez la table <code>Etudiant</code> avec les contraintes mentionnées.</li>
+        <li>Ajoutez des enregistrements pour 3 étudiants :
+            <ul>
+                <li><code>id_etudiant = 1</code>, <code>nom = "Dupont"</code>, <code>age = 22</code>, <code>date_inscription = SYSDATE + 1</code></li>
+                <li><code>id_etudiant = 2</code>, <code>nom = "Martin"</code>, <code>age = 17</code>, <code>date_inscription = SYSDATE + 5</code></li>
+                <li><code>id_etudiant = 3</code>, <code>nom = "Durand"</code>, <code>age = 25</code>, <code>date_inscription = SYSDATE - 3</code></li>
+            </ul>
+        </li>
+        <li>Corrigez les enregistrements qui ne respectent pas les contraintes.</li>
+        <li>
+            Utilisez une transaction pour insérer un étudiant 
+            (<code>id_etudiant = 4</code>, <code>nom = "Lemoine"</code>, <code>age = 21</code>, <code>date_inscription = SYSDATE + 2</code>), 
+            mais annulez cette opération à l'aide de <code>ROLLBACK</code>.
+        </li>
+    </ol>
+    <details>
+        <summary>Voir le corrigé</summary>
+        <p>Création de la table :</p>
+        <div class="example">
+            CREATE TABLE Etudiant (<br>
+            &nbsp;&nbsp;id_etudiant INT PRIMARY KEY,<br>
+            &nbsp;&nbsp;nom VARCHAR(100) NOT NULL,<br>
+            &nbsp;&nbsp;age INT CHECK (age BETWEEN 18 AND 30),<br>
+            &nbsp;&nbsp;date_inscription DATE CHECK (date_inscription > SYSDATE)<br>
+            );
+        </div>
+        <p>Insertion des données (avec corrections) :</p>
+        <div class="example">
+            INSERT INTO Etudiant VALUES (1, 'Dupont', 22, SYSDATE + 1);<br>
+            INSERT INTO Etudiant VALUES (2, 'Martin', 18, SYSDATE + 5); -- Correction : âge ajusté<br>
+            INSERT INTO Etudiant VALUES (3, 'Durand', 25, SYSDATE + 1); -- Correction : date ajustée
+        </div>
+        <p>Transaction avec <code>ROLLBACK</code> :</p>
+        <div class="example">
+            BEGIN;<br>
+            INSERT INTO Etudiant VALUES (4, 'Lemoine', 21, SYSDATE + 2);<br>
+            ROLLBACK;
+        </div>
+    </details>
+
+    <h3>Exercice 2 : Utilisation des Index et Vues</h3>
+    <p>
+        Vous gérez une base de données pour un magasin. La table <code>Produit</code> contient :
+    </p>
+    <ul>
+        <li><code>id_produit</code> (entier, clé primaire)</li>
+        <li><code>nom_produit</code> (texte, non nul)</li>
+        <li><code>prix</code> (numérique, supérieur à 0)</li>
+        <li><code>quantite</code> (entier)</li>
+    </ul>
+    <p>Étapes :</p>
+    <ol>
+        <li>Créez un index sur les colonnes <code>prix</code> et <code>quantite</code>.</li>
+        <li>Ajoutez les produits suivants :
+            <ul>
+                <li><code>id_produit = 1</code>, <code>nom_produit = "Télévision"</code>, <code>prix = 500</code>, <code>quantite = 10</code></li>
+                <li><code>id_produit = 2</code>, <code>nom_produit = "Ordinateur"</code>, <code>prix = 1000</code>, <code>quantite = 5</code></li>
+                <li><code>id_produit = 3</code>, <code>nom_produit = "Casque"</code>, <code>prix = 0</code>, <code>quantite = 20</code></li>
+            </ul>
+        </li>
+        <li>Créez une vue <code>Produits_Disponibles</code> qui affiche uniquement les produits dont la quantité est supérieure à 0 et le prix est supérieur à 100.</li>
+        <li>Interrogez la vue pour afficher les produits disponibles.</li>
+    </ol>
+    <details>
+        <summary>Voir le corrigé</summary>
+        <p>Création de la table et des index :</p>
+        <div class="example">
+            CREATE TABLE Produit (<br>
+            &nbsp;&nbsp;id_produit INT PRIMARY KEY,<br>
+            &nbsp;&nbsp;nom_produit VARCHAR(100) NOT NULL,<br>
+            &nbsp;&nbsp;prix DECIMAL CHECK (prix > 0),<br>
+            &nbsp;&nbsp;quantite INT<br>
+            );<br><br>
+            CREATE INDEX idx_prix_quantite ON Produit (prix, quantite);
+        </div>
+        <p>Insertion des données (avec corrections) :</p>
+        <div class="example">
+            INSERT INTO Produit VALUES (1, 'Télévision', 500, 10);<br>
+            INSERT INTO Produit VALUES (2, 'Ordinateur', 1000, 5);<br>
+            -- Correction : prix ajusté pour le produit 3<br>
+            INSERT INTO Produit VALUES (3, 'Casque', 150, 20);
+        </div>
+        <p>Création de la vue :</p>
+        <div class="example">
+            CREATE VIEW Produits_Disponibles AS<br>
+            SELECT id_produit, nom_produit, prix, quantite<br>
+            FROM Produit<br>
+            WHERE quantite > 0 AND prix > 100;
+        </div>
+        <p>Requête sur la vue :</p>
+        <div class="example">
+            SELECT * FROM Produits_Disponibles;
+        </div>
+    </details>
+</div>
+
     </div>
 </body>
 </html>
