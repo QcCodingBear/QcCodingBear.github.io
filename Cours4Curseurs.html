@@ -140,6 +140,71 @@
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Curseurs PL/SQL
         </div>
+<h2>Exercices Pratiques</h2>
+<div class="container">
+    <h3>Exercice 1 : Utilisation de curseurs explicites</h3>
+    <p>
+        Écrivez un bloc PL/SQL qui utilise un curseur explicite pour afficher tous les employés 
+        ayant un salaire supérieur à 3000. Le curseur doit parcourir la table <code>employees</code> 
+        et afficher l'identifiant, le nom, et le salaire de chaque employé concerné.
+    </p>
+    <div class="example">
+        <code>Table employees :</code><br>
+        employee_id | first_name | last_name | salary<br>
+        ------------------------------------------------<br>
+        101         | John       | Doe       | 3500<br>
+        102         | Alice      | Smith     | 2500<br>
+        103         | Bob        | Brown     | 4000<br>
+    </div>
+
+    <details>
+        <summary><strong>Corrigé</strong></summary>
+        <div class="example">
+            DECLARE<br>
+            &nbsp;&nbsp;CURSOR high_salary_cursor IS<br>
+            &nbsp;&nbsp;SELECT employee_id, last_name, salary FROM employees WHERE salary > 3000;<br>
+            &nbsp;&nbsp;emp_id employees.employee_id%TYPE;<br>
+            &nbsp;&nbsp;emp_name employees.last_name%TYPE;<br>
+            &nbsp;&nbsp;emp_salary employees.salary%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;OPEN high_salary_cursor;<br>
+            &nbsp;&nbsp;LOOP<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;FETCH high_salary_cursor INTO emp_id, emp_name, emp_salary;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;EXIT WHEN high_salary_cursor%NOTFOUND;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Employé : ' || emp_name || ' | Salaire : ' || emp_salary);<br>
+            &nbsp;&nbsp;END LOOP;<br>
+            &nbsp;&nbsp;CLOSE high_salary_cursor;<br>
+            END;
+        </div>
+    </details>
+
+    <h3>Exercice 2 : Curseur avec paramètres</h3>
+    <p>
+        Créez un curseur paramétré qui prend un identifiant de département en entrée 
+        et retourne les noms des employés appartenant à ce département. 
+        Parcourez les résultats du curseur et affichez les noms des employés dans le journal.
+    </p>
+
+    <details>
+        <summary><strong>Corrigé</strong></summary>
+        <div class="example">
+            DECLARE<br>
+            &nbsp;&nbsp;CURSOR dept_cursor(p_department_id NUMBER) IS<br>
+            &nbsp;&nbsp;SELECT last_name FROM employees WHERE department_id = p_department_id;<br>
+            &nbsp;&nbsp;emp_name employees.last_name%TYPE;<br>
+            BEGIN<br>
+            &nbsp;&nbsp;OPEN dept_cursor(30); -- Exemple avec le département 30<br>
+            &nbsp;&nbsp;LOOP<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;FETCH dept_cursor INTO emp_name;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;EXIT WHEN dept_cursor%NOTFOUND;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Employé : ' || emp_name);<br>
+            &nbsp;&nbsp;END LOOP;<br>
+            &nbsp;&nbsp;CLOSE dept_cursor;<br>
+            END;
+        </div>
+    </details>
+</div>
+
     </div>
 </body>
 </html>
