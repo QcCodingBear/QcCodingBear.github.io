@@ -158,6 +158,93 @@
                 DBMS_OUTPUT.PUT_LINE('Stock actuel : ' || inventory_pkg.get_stock(101));<br>
             END;<br>
         </div>
+<div class="container">
+    <h2>Exercice 1 : Création d'un Package pour la Gestion des Employés</h2>
+    <p>Créez un package pour gérer un système d'employés. Le package doit contenir :</p>
+    <ul>
+        <li>Une procédure <code>add_employee</code> pour ajouter un employé (avec un ID et un nom).</li>
+        <li>Une fonction <code>get_employee_count</code> pour retourner le nombre d'employés.</li>
+    </ul>
+    <p><strong>Indications :</strong> Vous devrez créer la spécification et le corps du package.</p>
+    
+    <div class="footer">
+        <button onclick="toggleCorrige('corrige1')">Afficher le corrigé</button>
+        <div id="corrige1" style="display:none;">
+            <h3>Corrigé :</h3>
+            <div class="example">
+                <p><strong>Spécification :</strong></p>
+                CREATE OR REPLACE PACKAGE employee_pkg AS<br>
+                    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2);<br>
+                    FUNCTION get_employee_count RETURN NUMBER;<br>
+                END employee_pkg;<br><br>
+
+                <p><strong>Corps :</strong></p>
+                CREATE OR REPLACE PACKAGE BODY employee_pkg AS<br>
+                    PROCEDURE add_employee(emp_id NUMBER, emp_name VARCHAR2) IS<br>
+                    BEGIN<br>
+                        -- Logique pour ajouter un employé<br>
+                        DBMS_OUTPUT.PUT_LINE('Employé ajouté : ' || emp_name);<br>
+                    END add_employee;<br><br>
+
+                    FUNCTION get_employee_count RETURN NUMBER IS<br>
+                        emp_count NUMBER;<br>
+                    BEGIN<br>
+                        -- Logique pour compter les employés<br>
+                        emp_count := 150; -- Valeur fictive<br>
+                        RETURN emp_count;<br>
+                    END get_employee_count;<br>
+                END employee_pkg;<br>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 2 : Création d'un Package pour la Gestion des Stocks</h2>
+    <p>Créez un package pour gérer un système de stock. Le package doit contenir :</p>
+    <ul>
+        <li>Une procédure <code>update_stock</code> pour mettre à jour le stock d'un produit.</li>
+        <li>Une fonction <code>get_stock</code> pour obtenir le stock d'un produit spécifique.</li>
+    </ul>
+    <p><strong>Indications :</strong> Vous devrez créer la spécification et le corps du package.</p>
+    
+    <div class="footer">
+        <button onclick="toggleCorrige('corrige2')">Afficher le corrigé</button>
+        <div id="corrige2" style="display:none;">
+            <h3>Corrigé :</h3>
+            <div class="example">
+                <p><strong>Spécification :</strong></p>
+                CREATE OR REPLACE PACKAGE stock_pkg AS<br>
+                    PROCEDURE update_stock(product_id NUMBER, quantity NUMBER);<br>
+                    FUNCTION get_stock(product_id NUMBER) RETURN NUMBER;<br>
+                END stock_pkg;<br><br>
+
+                <p><strong>Corps :</strong></p>
+                CREATE OR REPLACE PACKAGE BODY stock_pkg AS<br>
+                    PROCEDURE update_stock(product_id NUMBER, quantity NUMBER) IS<br>
+                    BEGIN<br>
+                        DBMS_OUTPUT.PUT_LINE('Stock mis à jour pour le produit : ' || product_id);<br>
+                    END update_stock;<br><br>
+                    FUNCTION get_stock(product_id NUMBER) RETURN NUMBER IS<br>
+                        stock NUMBER;<br>
+                    BEGIN<br>
+                        stock := 100; -- Valeur fictive<br>
+                        RETURN stock;<br>
+                    END get_stock;<br>
+                END stock_pkg;<br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCorrige(id) {
+        var corrige = document.getElementById(id);
+        if (corrige.style.display === "none") {
+            corrige.style.display = "block";
+        } else {
+            corrige.style.display = "none";
+        }
+    }
+</script>
 
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Packages SQL
