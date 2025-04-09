@@ -155,6 +155,108 @@
             <li><code>SQLCODE</code> : Retourne le code numérique de l'erreur survenue. Cela permet de récupérer un code d'erreur spécifique pour le traitement.</li>
             <li><code>SQLERRM</code> : Retourne le message d'erreur associé au code d'erreur, ce qui est très utile pour afficher un message d'erreur détaillé.</li>
         </ul>
+<div class="container">
+    <h1>Exercices sur la Gestion des Exceptions en PL/SQL</h1>
+
+    <h2>Exercice 1 : Gestion de l'exception <code>NO_DATA_FOUND</code></h2>
+    <p>Imaginons que vous effectuez une requête sur la table <code>employees</code> pour rechercher le prénom d'un employé à partir de son <code>employee_id</code>. Si aucun employé n'est trouvé avec l'<code>employee_id</code> donné, une exception <code>NO_DATA_FOUND</code> sera levée. Gérez cette exception de manière appropriée.</p>
+    
+    <div class="example">
+        DECLARE<br>
+            emp_name VARCHAR2(50);<br>
+        BEGIN<br>
+            SELECT first_name INTO emp_name<br>
+            FROM employees<br>
+            WHERE employee_id = 9999;<br>
+            DBMS_OUTPUT.PUT_LINE('Le prénom de l\'employé est : ' || emp_name);<br>
+        EXCEPTION<br>
+            -- Gérer l'exception NO_DATA_FOUND<br>
+            WHEN NO_DATA_FOUND THEN<br>
+                DBMS_OUTPUT.PUT_LINE('Aucun employé trouvé avec cet ID.');<br>
+        END;<br>
+        /
+    </div>
+
+    <h2>Exercice 2 : Définir et lever une exception personnalisée</h2>
+    <p>Dans cet exercice, vous devez définir une exception personnalisée et l'utiliser pour vérifier si un employé appartient à un département spécifique. Si le département de l'employé n'est pas trouvé, l'exception sera levée. Vous devez ensuite gérer cette exception.</p>
+    
+    <div class="example">
+        DECLARE<br>
+            employee_not_found EXCEPTION;<br>
+            emp_department VARCHAR2(50);<br>
+        BEGIN<br>
+            SELECT department_name INTO emp_department<br>
+            FROM departments<br>
+            WHERE department_id = 10 AND employee_id = 123;<br>
+            IF emp_department IS NULL THEN<br>
+                RAISE employee_not_found;<br>
+            END IF;<br>
+            DBMS_OUTPUT.PUT_LINE('L\'employé appartient au département : ' || emp_department);<br>
+        EXCEPTION<br>
+            WHEN employee_not_found THEN<br>
+                DBMS_OUTPUT.PUT_LINE('L\'employé n\'appartient pas au département spécifié.');<br>
+        END;<br>
+        /
+    </div>
+
+    <h2>Corrigé des exercices</h2>
+    <button onclick="toggleVisibility('corrige1')">Afficher le corrigé de l'Exercice 1</button>
+    <div id="corrige1" style="display: none;">
+        <h3>Corrigé de l'Exercice 1 :</h3>
+        <div class="example">
+            DECLARE<br>
+                emp_name VARCHAR2(50);<br>
+            BEGIN<br>
+                SELECT first_name INTO emp_name<br>
+                FROM employees<br>
+                WHERE employee_id = 9999;<br>
+                DBMS_OUTPUT.PUT_LINE('Le prénom de l\'employé est : ' || emp_name);<br>
+            EXCEPTION<br>
+                WHEN NO_DATA_FOUND THEN<br>
+                    DBMS_OUTPUT.PUT_LINE('Aucun employé trouvé avec cet ID.');<br>
+            END;<br>
+            /
+        </div>
+    </div>
+
+    <button onclick="toggleVisibility('corrige2')">Afficher le corrigé de l'Exercice 2</button>
+    <div id="corrige2" style="display: none;">
+        <h3>Corrigé de l'Exercice 2 :</h3>
+        <div class="example">
+            DECLARE<br>
+                employee_not_found EXCEPTION;<br>
+                emp_department VARCHAR2(50);<br>
+            BEGIN<br>
+                SELECT department_name INTO emp_department<br>
+                FROM departments<br>
+                WHERE department_id = 10 AND employee_id = 123;<br>
+                IF emp_department IS NULL THEN<br>
+                    RAISE employee_not_found;<br>
+                END IF;<br>
+                DBMS_OUTPUT.PUT_LINE('L\'employé appartient au département : ' || emp_department);<br>
+            EXCEPTION<br>
+                WHEN employee_not_found THEN<br>
+                    DBMS_OUTPUT.PUT_LINE('L\'employé n\'appartient pas au département spécifié.');<br>
+            END;<br>
+            /
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 - Cours interactif sur la Gestion des Exceptions en PL/SQL
+    </div>
+</div>
+
+<script>
+    function toggleVisibility(corrigeId) {
+        var corrige = document.getElementById(corrigeId);
+        if (corrige.style.display === "none") {
+            corrige.style.display = "block";
+        } else {
+            corrige.style.display = "none";
+        }
+    }
+</script>
 
         <div class="footer">
             &copy; 2025 - Cours interactif sur la Gestion des Exceptions en PL/SQL
