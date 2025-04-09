@@ -202,9 +202,9 @@
 </div>
 
 <h2>Corrigé</h2>
-<div style="display:none;" id="corrige1">
-    <button onclick="toggleVisibility('corrige1')">Afficher/Masquer le corrigé</button>
-    <div class="example">
+<div>
+    <button onclick="toggleVisibility('corrige1')">Afficher/Masquer le corrigé de l'Exercice 1</button>
+    <div class="example" id="corrige1" style="display:none;">
         -- Bloc principal<br>
         DECLARE<br>
             x NUMBER := 5;<br>
@@ -220,9 +220,9 @@
     </div>
 </div>
 
-<div style="display:none;" id="corrige2">
-    <button onclick="toggleVisibility('corrige2')">Afficher/Masquer le corrigé</button>
-    <div class="example">
+<div>
+    <button onclick="toggleVisibility('corrige2')">Afficher/Masquer le corrigé de l'Exercice 2</button>
+    <div class="example" id="corrige2" style="display:none;">
         -- Bloc principal<br>
         BEGIN<br>
             FOR emp_rec IN (SELECT * FROM emp) LOOP<br>
@@ -249,6 +249,7 @@
         }
     }
 </script>
+
 
 
         <div class="footer">
