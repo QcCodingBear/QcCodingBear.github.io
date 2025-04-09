@@ -163,6 +163,65 @@
             END;<br>
             /
         </div>
+<div class="container">
+    <h2>Exercice 1 : Création d'une procédure</h2>
+    <p>Dans cet exercice, vous devez créer une procédure <code>add_employee</code> qui insère un employé dans une table <code>employees</code> avec les champs suivants : <code>employee_id</code>, <code>first_name</code>, <code>last_name</code> et <code>salary</code>.</p>
+    <p>La procédure devra accepter des paramètres d'entrée pour chaque champ. L'ID de l'employé doit être généré automatiquement (par exemple, à l'aide d'une séquence).</p>
+    <div class="example">
+        <strong>Code à écrire :</strong><br>
+        CREATE OR REPLACE PROCEDURE add_employee (emp_id IN NUMBER, emp_first_name IN VARCHAR2, emp_last_name IN VARCHAR2, emp_salary IN NUMBER) IS<br>
+        &nbsp;&nbsp;BEGIN<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;-- Code d'insertion à compléter<br>
+        &nbsp;&nbsp;END;<br>
+        /
+    </div>
+    
+    <h2>Exercice 2 : Fonction de calcul de salaire</h2>
+    <p>Écrivez une fonction <code>calculate_bonus</code> qui calcule un bonus en fonction du salaire d'un employé. Le bonus doit être 10% du salaire pour les employés gagnant plus de 3000, et 5% pour les employés gagnant moins de 3000. La fonction doit renvoyer le montant du bonus.</p>
+    <div class="example">
+        <strong>Code à écrire :</strong><br>
+        CREATE OR REPLACE FUNCTION calculate_bonus (salary IN NUMBER) RETURN NUMBER IS<br>
+        &nbsp;&nbsp;bonus NUMBER;<br>
+        &nbsp;&nbsp;BEGIN<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;-- Code de calcul du bonus à compléter<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;RETURN bonus;<br>
+        &nbsp;&nbsp;END;<br>
+        /
+    </div>
+
+    <h2>Corrigé</h2>
+    <details>
+        <summary>Afficher le corrigé de l'exercice 1</summary>
+        <div class="example">
+            <strong>Corrigé Exercice 1 :</strong><br>
+            CREATE OR REPLACE PROCEDURE add_employee (emp_id IN NUMBER, emp_first_name IN VARCHAR2, emp_last_name IN VARCHAR2, emp_salary IN NUMBER) IS<br>
+            &nbsp;&nbsp;BEGIN<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;INSERT INTO employees (employee_id, first_name, last_name, salary)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;VALUES (emp_id, emp_first_name, emp_last_name, emp_salary);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Employee added successfully.');<br>
+            &nbsp;&nbsp;END;<br>
+            /
+        </div>
+    </details>
+
+    <details>
+        <summary>Afficher le corrigé de l'exercice 2</summary>
+        <div class="example">
+            <strong>Corrigé Exercice 2 :</strong><br>
+            CREATE OR REPLACE FUNCTION calculate_bonus (salary IN NUMBER) RETURN NUMBER IS<br>
+            &nbsp;&nbsp;bonus NUMBER;<br>
+            &nbsp;&nbsp;BEGIN<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;IF salary > 3000 THEN<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bonus := salary * 0.10;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ELSE<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bonus := salary * 0.05;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;END IF;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;RETURN bonus;<br>
+            &nbsp;&nbsp;END;<br>
+            /
+        </div>
+    </details>
+</div>
 
         <div class="footer">
             &copy; 2025 - Cours interactif sur les Procédures et Fonctions en PL/SQL
