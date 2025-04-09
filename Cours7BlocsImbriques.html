@@ -162,6 +162,93 @@
             END;<br>
             /
         </div>
+<h2>Exercice 1 : Bloc Imbriqué avec Variables</h2>
+<p>
+    Écrivez un bloc PL/SQL où vous déclarez une variable dans le bloc principal. Dans un sous-bloc imbriqué, déclarez une autre variable et effectuez une opération entre ces deux variables. Affichez ensuite le résultat avec DBMS_OUTPUT.PUT_LINE.
+</p>
+<div class="example">
+    -- Bloc principal<br>
+    DECLARE<br>
+        x NUMBER := 5;<br>
+    BEGIN<br>
+        -- Sous-bloc<br>
+        DECLARE<br>
+            y NUMBER := 10;<br>
+        BEGIN<br>
+            DBMS_OUTPUT.PUT_LINE('Résultat de x + y = ' || (x + y));<br>
+        END;<br>
+    END;<br>
+    /<br>
+</div>
+
+<h2>Exercice 2 : Gestion des Exceptions dans un Sous-Bloc</h2>
+<p>
+    Créez un bloc PL/SQL qui contient un sous-bloc pour insérer des données dans une table fictive (par exemple, <code>log</code>). Si une erreur d'insertion se produit, gérez-la dans le sous-bloc en affichant un message d'erreur spécifique.
+</p>
+<div class="example">
+    -- Bloc principal<br>
+    BEGIN<br>
+        FOR emp_rec IN (SELECT * FROM emp) LOOP<br>
+            BEGIN<br>
+                -- Tentative d'insertion<br>
+                INSERT INTO log VALUES (emp_rec.empno);<br>
+            EXCEPTION<br>
+                WHEN DUP_VAL_ON_INDEX THEN<br>
+                    DBMS_OUTPUT.PUT_LINE('Erreur pour l\'employé : ' || emp_rec.empno);<br>
+            END;<br>
+        END LOOP;<br>
+    END;<br>
+    /<br>
+</div>
+
+<h2>Corrigé</h2>
+<div style="display:none;" id="corrige1">
+    <button onclick="toggleVisibility('corrige1')">Afficher/Masquer le corrigé</button>
+    <div class="example">
+        -- Bloc principal<br>
+        DECLARE<br>
+            x NUMBER := 5;<br>
+        BEGIN<br>
+            -- Sous-bloc<br>
+            DECLARE<br>
+                y NUMBER := 10;<br>
+            BEGIN<br>
+                DBMS_OUTPUT.PUT_LINE('Résultat de x + y = ' || (x + y));<br>
+            END;<br>
+        END;<br>
+        /<br>
+    </div>
+</div>
+
+<div style="display:none;" id="corrige2">
+    <button onclick="toggleVisibility('corrige2')">Afficher/Masquer le corrigé</button>
+    <div class="example">
+        -- Bloc principal<br>
+        BEGIN<br>
+            FOR emp_rec IN (SELECT * FROM emp) LOOP<br>
+                BEGIN<br>
+                    -- Tentative d'insertion<br>
+                    INSERT INTO log VALUES (emp_rec.empno);<br>
+                EXCEPTION<br>
+                    WHEN DUP_VAL_ON_INDEX THEN<br>
+                        DBMS_OUTPUT.PUT_LINE('Erreur pour l\'employé : ' || emp_rec.empno);<br>
+                END;<br>
+            END LOOP;<br>
+        END;<br>
+        /<br>
+    </div>
+</div>
+
+<script>
+    function toggleVisibility(corrigeId) {
+        var element = document.getElementById(corrigeId);
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>
 
         <div class="footer">
             &copy; 2025 - Cours interactif sur PL/SQL
