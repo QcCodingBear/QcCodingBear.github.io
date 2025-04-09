@@ -179,6 +179,57 @@
         <div class="footer">
             &copy; 2025 - Cours interactif sur PL/SQL
         </div>
+<h2>Exercices Pratiques</h2>
+
+<h3>Exercice 1 : Affichage d'un message personnalisé</h3>
+<p>Écrivez un bloc PL/SQL qui déclare une variable pour stocker un nom et affiche un message personnalisé avec ce nom en utilisant <code>DBMS_OUTPUT.PUT_LINE</code>.</p>
+<div class="example">
+    DECLARE<br>
+    &nbsp;&nbsp;-- Déclarez une variable pour stocker le nom<br>
+    BEGIN<br>
+    &nbsp;&nbsp;-- Ajoutez le code pour afficher un message personnalisé<br>
+    END;
+</div>
+<button onclick="toggleSolution('solution1')">Voir la solution</button>
+<div id="solution1" style="display: none;" class="example">
+    DECLARE<br>
+    &nbsp;&nbsp;v_nom VARCHAR2(50) := 'Alice';<br>
+    BEGIN<br>
+    &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Bonjour, ' || v_nom || '! Bienvenue dans le cours PL/SQL.');<br>
+    END;
+</div>
+
+<h3>Exercice 2 : Calculer une augmentation salariale</h3>
+<p>Créez un bloc PL/SQL qui déclare une variable pour un salaire de base, calcule une augmentation de 10% et affiche le nouveau salaire.</p>
+<div class="example">
+    DECLARE<br>
+    &nbsp;&nbsp;-- Déclarez une variable pour le salaire<br>
+    BEGIN<br>
+    &nbsp;&nbsp;-- Ajoutez le code pour calculer et afficher le nouveau salaire<br>
+    END;
+</div>
+<button onclick="toggleSolution('solution2')">Voir la solution</button>
+<div id="solution2" style="display: none;" class="example">
+    DECLARE<br>
+    &nbsp;&nbsp;v_salaire NUMBER(7,2) := 3000;<br>
+    &nbsp;&nbsp;v_nouveau_salaire NUMBER(7,2);<br>
+    BEGIN<br>
+    &nbsp;&nbsp;v_nouveau_salaire := v_salaire * 1.10;<br>
+    &nbsp;&nbsp;DBMS_OUTPUT.PUT_LINE('Le nouveau salaire est : ' || v_nouveau_salaire);<br>
+    END;
+</div>
+
+<script>
+    function toggleSolution(id) {
+        const solution = document.getElementById(id);
+        if (solution.style.display === 'none') {
+            solution.style.display = 'block';
+        } else {
+            solution.style.display = 'none';
+        }
+    }
+</script>
+
     </div>
 </body>
 </html>
