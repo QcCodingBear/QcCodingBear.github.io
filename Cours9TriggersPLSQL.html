@@ -117,7 +117,7 @@
         </ul>
 
         <h2>Structure de base d'un déclencheur</h2>
-        <div class="example">
+        <div class="example"><pre>
 CREATE [OR REPLACE] TRIGGER trigger_name
 {BEFORE | AFTER | INSTEAD OF} 
 {INSERT | UPDATE [OF column] | DELETE}
@@ -131,7 +131,7 @@ BEGIN
     -- Corps du déclencheur
 [EXCEPTION
     -- Gestion des exceptions]
-END;
+END;</pre>
         </div>
 
         <h2>Composants principaux</h2>
@@ -244,7 +244,7 @@ END;</pre>
                 <button onclick="toggleCorrige('corrige1')">Afficher le corrigé</button>
                 <div id="corrige1" style="display:none;">
                     <h3>Corrigé :</h3>
-                    <div class="example">
+                    <div class="example"><pre>
 CREATE OR REPLACE TRIGGER restrict_salary
 BEFORE INSERT OR UPDATE OF salary ON employees
 FOR EACH ROW
@@ -253,7 +253,7 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20202, 
             'Seuls les directeurs peuvent avoir un salaire supérieur à 20 000$');
     END IF;
-END;
+END;</pre>
                     </div>
                 </div>
             </div>
@@ -266,7 +266,7 @@ END;
                 <button onclick="toggleCorrige('corrige2')">Afficher le corrigé</button>
                 <div id="corrige2" style="display:none;">
                     <h3>Corrigé :</h3>
-                    <div class="example">
+                    <div class="example"><pre>
 -- Création de la séquence (si nécessaire)
 CREATE SEQUENCE emp_seq START WITH 1000 INCREMENT BY 1;
 
@@ -278,7 +278,7 @@ BEGIN
     IF :NEW.employee_id IS NULL THEN
         :NEW.employee_id := emp_seq.NEXTVAL;
     END IF;
-END;
+END;</pre>
                     </div>
                 </div>
             </div>
