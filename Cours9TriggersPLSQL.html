@@ -389,6 +389,15 @@ END;
             onclick="toggleChat()">💬</button>
 
     <script>
+
+          function toggleCorrige(id) {
+        var corrige = document.getElementById(id);
+        if (corrige.style.display === "none") {
+            corrige.style.display = "block";
+        } else {
+            corrige.style.display = "none";
+        }
+    }
         // Gestion de la chatbox
         function toggleChat() {
             const chatbox = document.getElementById('deepseek-chatbox');
