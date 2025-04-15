@@ -165,57 +165,57 @@ END;
         <h2>Exemple 1 : Contrôle d'accès horaire</h2>
         <p>Déclencheur qui limite les opérations sur la table EMPLOYEES aux heures ouvrables :</p>
         <div class="example">
-CREATE OR REPLACE TRIGGER secure_emp
+<pre>CREATE OR REPLACE TRIGGER secure_emp
 BEFORE INSERT OR UPDATE OR DELETE ON employees
 BEGIN
-    IF (TO_CHAR(SYSDATE,'DY') IN ('SAT','SUN')) OR
-       (TO_CHAR(SYSDATE,'HH24') NOT BETWEEN '08' AND '18') THEN
-        IF DELETING THEN 
-            RAISE_APPLICATION_ERROR(-20502,'Suppression autorisée seulement en heures ouvrables');
-        ELSIF INSERTING THEN 
-            RAISE_APPLICATION_ERROR(-20500,'Insertion autorisée seulement en heures ouvrables');
-        ELSIF UPDATING THEN 
-            RAISE_APPLICATION_ERROR(-20504,'Mise à jour autorisée seulement en heures ouvrables');
-        END IF;
-    END IF;
-END;
+   IF (TO_CHAR(SYSDATE,'DY') IN ('SAT','SUN')) OR
+      (TO_CHAR(SYSDATE,'HH24') NOT BETWEEN '08' AND '18') THEN
+      IF DELETING THEN 
+         RAISE_APPLICATION_ERROR(-20502,'Suppression autorisée seulement en heures ouvrables');
+      ELSIF INSERTING THEN 
+         RAISE_APPLICATION_ERROR(-20500,'Insertion autorisée seulement en heures ouvrables');
+      ELSIF UPDATING THEN 
+         RAISE_APPLICATION_ERROR(-20504,'Mise à jour autorisée seulement en heures ouvrables');
+      END IF;
+   END IF;
+END;</pre>
         </div>
 
         <h2>Exemple 2 : Audit des modifications</h2>
         <p>Déclencheur qui enregistre les modifications dans une table d'audit :</p>
         <div class="example">
-CREATE TABLE audit_emp (
-    user_name VARCHAR2(30),
-    time_stamp DATE,
-    id NUMBER(6),
-    old_last_name VARCHAR2(25),
-    new_last_name VARCHAR2(25),
-    old_salary NUMBER(8,2),
-    new_salary NUMBER(8,2),
-    operation VARCHAR2(10)
+<pre>CREATE TABLE audit_emp (
+   user_name VARCHAR2(30),
+   time_stamp DATE,
+   id NUMBER(6),
+   old_last_name VARCHAR2(25),
+   new_last_name VARCHAR2(25),
+   old_salary NUMBER(8,2),
+   new_salary NUMBER(8,2),
+   operation VARCHAR2(10)
 );
 
 CREATE OR REPLACE TRIGGER audit_emp_values
 AFTER INSERT OR UPDATE OR DELETE ON employees
 FOR EACH ROW
 DECLARE
-    v_operation VARCHAR2(10);
+   v_operation VARCHAR2(10);
 BEGIN
-    IF INSERTING THEN
-        v_operation := 'INSERT';
-    ELSIF UPDATING THEN
-        v_operation := 'UPDATE';
-    ELSE
-        v_operation := 'DELETE';
-    END IF;
-    
-    INSERT INTO audit_emp VALUES (
-        USER, SYSDATE, 
-        :NEW.employee_id, 
-        :OLD.last_name, :NEW.last_name,
-        :OLD.salary, :NEW.salary,
-        v_operation);
-END;
+   IF INSERTING THEN
+      v_operation := 'INSERT';
+   ELSIF UPDATING THEN
+      v_operation := 'UPDATE';
+   ELSE
+      v_operation := 'DELETE';
+   END IF;
+   
+   INSERT INTO audit_emp VALUES (
+      USER, SYSDATE, 
+      :NEW.employee_id, 
+      :OLD.last_name, :NEW.last_name,
+      :OLD.salary, :NEW.salary,
+      v_operation);
+END;</pre>
         </div>
 
         <h2>Gestion des déclencheurs</h2>
